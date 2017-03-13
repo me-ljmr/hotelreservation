@@ -118,10 +118,7 @@ public class RoomException implements Serializable {
     public String toString() {
         return "com.awesomegroup.RoomException[ roomId=" + roomId + " ]";
     }
-
-    public RoomException(Integer exceptionId) {
-        this.exceptionId = exceptionId;
-    }
+ 
 
     public Integer getExceptionId() {
         return exceptionId;
@@ -131,29 +128,5 @@ public class RoomException implements Serializable {
         this.exceptionId = exceptionId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (exceptionId != null ? exceptionId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RoomException)) {
-            return false;
-        }
-        RoomException other = (RoomException) object;
-        if ((this.exceptionId == null && other.exceptionId != null) || (this.exceptionId != null && !this.exceptionId.equals(other.exceptionId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.awesomegroup.RoomException[ exceptionId=" + exceptionId + " ]";
-    }
-    
+      
 }
