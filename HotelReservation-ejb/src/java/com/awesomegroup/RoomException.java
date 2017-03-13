@@ -35,6 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RoomException.findByUserId", query = "SELECT r FROM RoomException r WHERE r.userId = :userId"),
     @NamedQuery(name = "RoomException.findByDescription", query = "SELECT r FROM RoomException r WHERE r.description = :description")})
 public class RoomException implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "exception_id")
+    private Integer exceptionId;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -112,6 +117,43 @@ public class RoomException implements Serializable {
     @Override
     public String toString() {
         return "com.awesomegroup.RoomException[ roomId=" + roomId + " ]";
+    }
+
+    public RoomException(Integer exceptionId) {
+        this.exceptionId = exceptionId;
+    }
+
+    public Integer getExceptionId() {
+        return exceptionId;
+    }
+
+    public void setExceptionId(Integer exceptionId) {
+        this.exceptionId = exceptionId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (exceptionId != null ? exceptionId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof RoomException)) {
+            return false;
+        }
+        RoomException other = (RoomException) object;
+        if ((this.exceptionId == null && other.exceptionId != null) || (this.exceptionId != null && !this.exceptionId.equals(other.exceptionId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.awesomegroup.RoomException[ exceptionId=" + exceptionId + " ]";
     }
     
 }
