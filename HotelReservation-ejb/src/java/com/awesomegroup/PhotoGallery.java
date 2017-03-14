@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PhotoGallery.findAll", query = "SELECT p FROM PhotoGallery p"),
-    @NamedQuery(name = "PhotoGallery.findByGalleryId", query = "SELECT p FROM PhotoGallery p WHERE p.galleryId = :galleryId"),
+    @NamedQuery(name = "PhotoGallery.findById", query = "SELECT p FROM PhotoGallery p WHERE p.id = :id"),
     @NamedQuery(name = "PhotoGallery.findByHotelId", query = "SELECT p FROM PhotoGallery p WHERE p.hotelId = :hotelId"),
     @NamedQuery(name = "PhotoGallery.findByPhotoUrl", query = "SELECT p FROM PhotoGallery p WHERE p.photoUrl = :photoUrl"),
     @NamedQuery(name = "PhotoGallery.findByPhotoTitle", query = "SELECT p FROM PhotoGallery p WHERE p.photoTitle = :photoTitle")})
@@ -36,8 +36,8 @@ public class PhotoGallery implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "gallery_id")
-    private Integer galleryId;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "hotel_id")
     private Integer hotelId;
     @Size(max = 100)
@@ -50,16 +50,16 @@ public class PhotoGallery implements Serializable {
     public PhotoGallery() {
     }
 
-    public PhotoGallery(Integer galleryId) {
-        this.galleryId = galleryId;
+    public PhotoGallery(Integer id) {
+        this.id = id;
     }
 
-    public Integer getGalleryId() {
-        return galleryId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setGalleryId(Integer galleryId) {
-        this.galleryId = galleryId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getHotelId() {
@@ -89,7 +89,7 @@ public class PhotoGallery implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (galleryId != null ? galleryId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +100,7 @@ public class PhotoGallery implements Serializable {
             return false;
         }
         PhotoGallery other = (PhotoGallery) object;
-        if ((this.galleryId == null && other.galleryId != null) || (this.galleryId != null && !this.galleryId.equals(other.galleryId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -108,7 +108,7 @@ public class PhotoGallery implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.PhotoGallery[ galleryId=" + galleryId + " ]";
+        return "com.awesomegroup.PhotoGallery[ id=" + id + " ]";
     }
     
 }

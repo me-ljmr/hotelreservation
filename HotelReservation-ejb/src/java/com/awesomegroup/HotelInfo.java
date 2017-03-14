@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,58 +28,65 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "HotelInfo.findAll", query = "SELECT h FROM HotelInfo h"),
-    @NamedQuery(name = "HotelInfo.findByHotelId", query = "SELECT h FROM HotelInfo h WHERE h.hotelId = :hotelId"),
-    @NamedQuery(name = "HotelInfo.findByHotelName", query = "SELECT h FROM HotelInfo h WHERE h.hotelName = :hotelName"),
-    @NamedQuery(name = "HotelInfo.findByHotelAddress", query = "SELECT h FROM HotelInfo h WHERE h.hotelAddress = :hotelAddress")})
+    @NamedQuery(name = "HotelInfo.findById", query = "SELECT h FROM HotelInfo h WHERE h.id = :id"),
+    @NamedQuery(name = "HotelInfo.findByTitle", query = "SELECT h FROM HotelInfo h WHERE h.title = :title"),
+    @NamedQuery(name = "HotelInfo.findByAddress", query = "SELECT h FROM HotelInfo h WHERE h.address = :address")})
 public class HotelInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "hotel_id")
-    private Integer hotelId;
-    @Size(max = 20)
-    @Column(name = "hotel_name")
-    private String hotelName;
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "title")
+    private String title;
     @Size(max = 100)
-    @Column(name = "hotel_address")
-    private String hotelAddress;
+    @Column(name = "address")
+    private String address;
 
     public HotelInfo() {
     }
 
-    public HotelInfo(Integer hotelId) {
-        this.hotelId = hotelId;
+    public HotelInfo(Integer id) {
+        this.id = id;
     }
 
-    public Integer getHotelId() {
-        return hotelId;
+    public HotelInfo(Integer id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
-    public void setHotelId(Integer hotelId) {
-        this.hotelId = hotelId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getHotelName() {
-        return hotelName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
+    public String getTitle() {
+        return title;
     }
 
-    public String getHotelAddress() {
-        return hotelAddress;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setHotelAddress(String hotelAddress) {
-        this.hotelAddress = hotelAddress;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (hotelId != null ? hotelId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -89,7 +97,7 @@ public class HotelInfo implements Serializable {
             return false;
         }
         HotelInfo other = (HotelInfo) object;
-        if ((this.hotelId == null && other.hotelId != null) || (this.hotelId != null && !this.hotelId.equals(other.hotelId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -97,7 +105,7 @@ public class HotelInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.HotelInfo[ hotelId=" + hotelId + " ]";
+        return "com.awesomegroup.HotelInfo[ id=" + id + " ]";
     }
     
 }

@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,41 +26,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
-    @NamedQuery(name = "Room.findByRoomId", query = "SELECT r FROM Room r WHERE r.roomId = :roomId"),
+    @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByFloor", query = "SELECT r FROM Room r WHERE r.floor = :floor"),
     @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber"),
-    @NamedQuery(name = "Room.findByServiceName", query = "SELECT r FROM Room r WHERE r.serviceName = :serviceName"),
     @NamedQuery(name = "Room.findByRoomTypeId", query = "SELECT r FROM Room r WHERE r.roomTypeId = :roomTypeId")})
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "room_id")
-    private Integer roomId;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "floor")
     private Integer floor;
     @Column(name = "room_number")
     private Integer roomNumber;
-    @Size(max = 100)
-    @Column(name = "service_name")
-    private String serviceName;
     @Column(name = "room_type_id")
     private Integer roomTypeId;
 
     public Room() {
     }
 
-    public Room(Integer roomId) {
-        this.roomId = roomId;
+    public Room(Integer id) {
+        this.id = id;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getFloor() {
@@ -80,14 +75,6 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
     public Integer getRoomTypeId() {
         return roomTypeId;
     }
@@ -99,7 +86,7 @@ public class Room implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (roomId != null ? roomId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -110,7 +97,7 @@ public class Room implements Serializable {
             return false;
         }
         Room other = (Room) object;
-        if ((this.roomId == null && other.roomId != null) || (this.roomId != null && !this.roomId.equals(other.roomId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -118,7 +105,7 @@ public class Room implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.Room[ roomId=" + roomId + " ]";
+        return "com.awesomegroup.Room[ id=" + id + " ]";
     }
     
 }

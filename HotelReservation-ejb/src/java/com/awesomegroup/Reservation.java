@@ -18,6 +18,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,18 +31,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
-    @NamedQuery(name = "Reservation.findByResId", query = "SELECT r FROM Reservation r WHERE r.resId = :resId"),
+    @NamedQuery(name = "Reservation.findById", query = "SELECT r FROM Reservation r WHERE r.id = :id"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
     @NamedQuery(name = "Reservation.findByRoomId", query = "SELECT r FROM Reservation r WHERE r.roomId = :roomId"),
-    @NamedQuery(name = "Reservation.findByUserId", query = "SELECT r FROM Reservation r WHERE r.userId = :userId")})
+    @NamedQuery(name = "Reservation.findByUserId", query = "SELECT r FROM Reservation r WHERE r.userId = :userId"),
+    @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService")})
 public class Reservation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "res_id")
-    private Integer resId;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "date_from")
     @Temporal(TemporalType.DATE)
     private Date dateFrom;
@@ -51,20 +54,30 @@ public class Reservation implements Serializable {
     private Integer roomId;
     @Column(name = "user_id")
     private Integer userId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "special_service")
+    private String specialService;
 
     public Reservation() {
     }
 
-    public Reservation(Integer resId) {
-        this.resId = resId;
+    public Reservation(Integer id) {
+        this.id = id;
     }
 
-    public Integer getResId() {
-        return resId;
+    public Reservation(Integer id, String specialService) {
+        this.id = id;
+        this.specialService = specialService;
     }
 
-    public void setResId(Integer resId) {
-        this.resId = resId;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Date getDateFrom() {
@@ -99,10 +112,18 @@ public class Reservation implements Serializable {
         this.userId = userId;
     }
 
+    public String getSpecialService() {
+        return specialService;
+    }
+
+    public void setSpecialService(String specialService) {
+        this.specialService = specialService;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (resId != null ? resId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -113,7 +134,7 @@ public class Reservation implements Serializable {
             return false;
         }
         Reservation other = (Reservation) object;
-        if ((this.resId == null && other.resId != null) || (this.resId != null && !this.resId.equals(other.resId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -121,7 +142,7 @@ public class Reservation implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.Reservation[ resId=" + resId + " ]";
+        return "com.awesomegroup.Reservation[ id=" + id + " ]";
     }
     
 }

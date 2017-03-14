@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,52 +31,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RoomException.findAll", query = "SELECT r FROM RoomException r"),
-    @NamedQuery(name = "RoomException.findByRoomId", query = "SELECT r FROM RoomException r WHERE r.roomId = :roomId"),
-    @NamedQuery(name = "RoomException.findByDemandDate", query = "SELECT r FROM RoomException r WHERE r.demandDate = :demandDate"),
+    @NamedQuery(name = "RoomException.findById", query = "SELECT r FROM RoomException r WHERE r.id = :id"),
+    @NamedQuery(name = "RoomException.findByOnDate", query = "SELECT r FROM RoomException r WHERE r.onDate = :onDate"),
     @NamedQuery(name = "RoomException.findByUserId", query = "SELECT r FROM RoomException r WHERE r.userId = :userId"),
-    @NamedQuery(name = "RoomException.findByDescription", query = "SELECT r FROM RoomException r WHERE r.description = :description")})
+    @NamedQuery(name = "RoomException.findByNotes", query = "SELECT r FROM RoomException r WHERE r.notes = :notes"),
+    @NamedQuery(name = "RoomException.findByRoomId", query = "SELECT r FROM RoomException r WHERE r.roomId = :roomId")})
 public class RoomException implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "exception_id")
-    private Integer exceptionId;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "room_id")
-    private Integer roomId;
-    @Column(name = "demand_date")
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "on_date")
     @Temporal(TemporalType.DATE)
-    private Date demandDate;
+    private Date onDate;
     @Column(name = "user_id")
     private Integer userId;
     @Size(max = 100)
-    @Column(name = "description")
-    private String description;
+    @Column(name = "notes")
+    private String notes;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "room_id")
+    private int roomId;
 
     public RoomException() {
     }
 
-    public RoomException(Integer roomId) {
+    public RoomException(Integer id) {
+        this.id = id;
+    }
+
+    public RoomException(Integer id, int roomId) {
+        this.id = id;
         this.roomId = roomId;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Date getDemandDate() {
-        return demandDate;
+    public Date getOnDate() {
+        return onDate;
     }
 
-    public void setDemandDate(Date demandDate) {
-        this.demandDate = demandDate;
+    public void setOnDate(Date onDate) {
+        this.onDate = onDate;
     }
 
     public Integer getUserId() {
@@ -86,18 +92,26 @@ public class RoomException implements Serializable {
         this.userId = userId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (roomId != null ? roomId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -108,7 +122,7 @@ public class RoomException implements Serializable {
             return false;
         }
         RoomException other = (RoomException) object;
-        if ((this.roomId == null && other.roomId != null) || (this.roomId != null && !this.roomId.equals(other.roomId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -116,17 +130,7 @@ public class RoomException implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.RoomException[ roomId=" + roomId + " ]";
+        return "com.awesomegroup.RoomException[ id=" + id + " ]";
     }
- 
-
-    public Integer getExceptionId() {
-        return exceptionId;
-    }
-
-    public void setExceptionId(Integer exceptionId) {
-        this.exceptionId = exceptionId;
-    }
-
-      
+    
 }

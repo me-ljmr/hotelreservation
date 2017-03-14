@@ -28,58 +28,58 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RoomType.findAll", query = "SELECT r FROM RoomType r"),
-    @NamedQuery(name = "RoomType.findByRoomTypeId", query = "SELECT r FROM RoomType r WHERE r.roomTypeId = :roomTypeId"),
-    @NamedQuery(name = "RoomType.findByRoomRate", query = "SELECT r FROM RoomType r WHERE r.roomRate = :roomRate"),
-    @NamedQuery(name = "RoomType.findByRoomDescription", query = "SELECT r FROM RoomType r WHERE r.roomDescription = :roomDescription")})
+    @NamedQuery(name = "RoomType.findById", query = "SELECT r FROM RoomType r WHERE r.id = :id"),
+    @NamedQuery(name = "RoomType.findByDescription", query = "SELECT r FROM RoomType r WHERE r.description = :description"),
+    @NamedQuery(name = "RoomType.findByRate", query = "SELECT r FROM RoomType r WHERE r.rate = :rate")})
 public class RoomType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "room_type_id")
-    private Integer roomTypeId;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "room_rate")
-    private BigDecimal roomRate;
+    @Column(name = "id")
+    private Integer id;
     @Size(max = 100)
-    @Column(name = "room_description")
-    private String roomDescription;
+    @Column(name = "description")
+    private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "rate")
+    private BigDecimal rate;
 
     public RoomType() {
     }
 
-    public RoomType(Integer roomTypeId) {
-        this.roomTypeId = roomTypeId;
+    public RoomType(Integer id) {
+        this.id = id;
     }
 
-    public Integer getRoomTypeId() {
-        return roomTypeId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRoomTypeId(Integer roomTypeId) {
-        this.roomTypeId = roomTypeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public BigDecimal getRoomRate() {
-        return roomRate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRoomRate(BigDecimal roomRate) {
-        this.roomRate = roomRate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getRoomDescription() {
-        return roomDescription;
+    public BigDecimal getRate() {
+        return rate;
     }
 
-    public void setRoomDescription(String roomDescription) {
-        this.roomDescription = roomDescription;
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (roomTypeId != null ? roomTypeId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -90,7 +90,7 @@ public class RoomType implements Serializable {
             return false;
         }
         RoomType other = (RoomType) object;
-        if ((this.roomTypeId == null && other.roomTypeId != null) || (this.roomTypeId != null && !this.roomTypeId.equals(other.roomTypeId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -98,7 +98,7 @@ public class RoomType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.RoomType[ roomTypeId=" + roomTypeId + " ]";
+        return "com.awesomegroup.RoomType[ id=" + id + " ]";
     }
     
 }

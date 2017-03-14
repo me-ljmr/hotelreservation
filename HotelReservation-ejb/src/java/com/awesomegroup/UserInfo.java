@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UserInfo.findAll", query = "SELECT u FROM UserInfo u"),
-    @NamedQuery(name = "UserInfo.findByUserId", query = "SELECT u FROM UserInfo u WHERE u.userId = :userId"),
+    @NamedQuery(name = "UserInfo.findById", query = "SELECT u FROM UserInfo u WHERE u.id = :id"),
     @NamedQuery(name = "UserInfo.findByFirstName", query = "SELECT u FROM UserInfo u WHERE u.firstName = :firstName"),
     @NamedQuery(name = "UserInfo.findByLastName", query = "SELECT u FROM UserInfo u WHERE u.lastName = :lastName"),
     @NamedQuery(name = "UserInfo.findByUserAddress", query = "SELECT u FROM UserInfo u WHERE u.userAddress = :userAddress"),
@@ -43,8 +43,8 @@ public class UserInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "id")
+    private Integer id;
     @Size(max = 20)
     @Column(name = "first_name")
     private String firstName;
@@ -71,16 +71,16 @@ public class UserInfo implements Serializable {
     public UserInfo() {
     }
 
-    public UserInfo(Integer userId) {
-        this.userId = userId;
+    public UserInfo(Integer id) {
+        this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -142,7 +142,7 @@ public class UserInfo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -153,7 +153,7 @@ public class UserInfo implements Serializable {
             return false;
         }
         UserInfo other = (UserInfo) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -161,7 +161,7 @@ public class UserInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.UserInfo[ userId=" + userId + " ]";
+        return "com.awesomegroup.UserInfo[ id=" + id + " ]";
     }
     
 }

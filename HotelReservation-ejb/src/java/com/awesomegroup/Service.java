@@ -6,7 +6,6 @@
 package com.awesomegroup;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,31 +24,42 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lujamanandhar
  */
 @Entity
-@Table(name = "room_calendar")
+@Table(name = "service")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RoomCalendar.findAll", query = "SELECT r FROM RoomCalendar r"),
-    @NamedQuery(name = "RoomCalendar.findById", query = "SELECT r FROM RoomCalendar r WHERE r.id = :id"),
-    @NamedQuery(name = "RoomCalendar.findByDiscountDate", query = "SELECT r FROM RoomCalendar r WHERE r.discountDate = :discountDate"),
-    @NamedQuery(name = "RoomCalendar.findByPromotionPercentage", query = "SELECT r FROM RoomCalendar r WHERE r.promotionPercentage = :promotionPercentage")})
-public class RoomCalendar implements Serializable {
+    @NamedQuery(name = "Service.findAll", query = "SELECT s FROM Service s"),
+    @NamedQuery(name = "Service.findById", query = "SELECT s FROM Service s WHERE s.id = :id"),
+    @NamedQuery(name = "Service.findByTitle", query = "SELECT s FROM Service s WHERE s.title = :title"),
+    @NamedQuery(name = "Service.findByDescription", query = "SELECT s FROM Service s WHERE s.description = :description")})
+public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "discount_date")
-    @Temporal(TemporalType.DATE)
-    private Date discountDate;
-    @Column(name = "promotion_percentage")
-    private Integer promotionPercentage;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "title")
+    private String title;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(name = "description")
+    private String description;
 
-    public RoomCalendar() {
+    public Service() {
     }
 
-    public RoomCalendar(Integer id) {
+    public Service(Integer id) {
         this.id = id;
+    }
+
+    public Service(Integer id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -60,20 +70,20 @@ public class RoomCalendar implements Serializable {
         this.id = id;
     }
 
-    public Date getDiscountDate() {
-        return discountDate;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDiscountDate(Date discountDate) {
-        this.discountDate = discountDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Integer getPromotionPercentage() {
-        return promotionPercentage;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPromotionPercentage(Integer promotionPercentage) {
-        this.promotionPercentage = promotionPercentage;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -86,10 +96,10 @@ public class RoomCalendar implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RoomCalendar)) {
+        if (!(object instanceof Service)) {
             return false;
         }
-        RoomCalendar other = (RoomCalendar) object;
+        Service other = (Service) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -98,7 +108,7 @@ public class RoomCalendar implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.RoomCalendar[ id=" + id + " ]";
+        return "com.awesomegroup.Service[ id=" + id + " ]";
     }
     
 }
