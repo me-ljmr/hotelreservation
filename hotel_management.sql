@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 14, 2017 at 01:46 AM
+-- Generation Time: Mar 14, 2017 at 02:13 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -80,6 +80,7 @@ CREATE TABLE `photo_gallery` (
 
 CREATE TABLE `reservation` (
   `id` int(11) NOT NULL,
+  `booked_date` datetime NOT NULL,
   `date_from` date DEFAULT NULL,
   `date_till` date DEFAULT NULL,
   `room_id` int(6) DEFAULT NULL,
