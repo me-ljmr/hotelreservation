@@ -342,6 +342,8 @@ ALTER TABLE `photo_gallery`
 --
 ALTER TABLE `reservation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `reservation` ADD STATUS CHAR(2);
 --
 -- AUTO_INCREMENT for table `room`
 --
