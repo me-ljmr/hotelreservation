@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
     @NamedQuery(name = "Reservation.findById", query = "SELECT r FROM Reservation r WHERE r.id = :id"),
+    @NamedQuery(name = "Reservation.findByBookedDate", query = "SELECT r FROM Reservation r WHERE r.bookedDate = :bookedDate"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
     @NamedQuery(name = "Reservation.findByRoomId", query = "SELECT r FROM Reservation r WHERE r.roomId = :roomId"),
@@ -44,6 +45,11 @@ public class Reservation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "booked_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bookedDate;
     @Column(name = "date_from")
     @Temporal(TemporalType.DATE)
     private Date dateFrom;
@@ -67,8 +73,9 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public Reservation(Integer id, String specialService) {
+    public Reservation(Integer id, Date bookedDate, String specialService) {
         this.id = id;
+        this.bookedDate = bookedDate;
         this.specialService = specialService;
     }
 
@@ -78,6 +85,14 @@ public class Reservation implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getBookedDate() {
+        return bookedDate;
+    }
+
+    public void setBookedDate(Date bookedDate) {
+        this.bookedDate = bookedDate;
     }
 
     public Date getDateFrom() {
