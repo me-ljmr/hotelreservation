@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reservation.findByBookedDate", query = "SELECT r FROM Reservation r WHERE r.bookedDate = :bookedDate"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
-    @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService")})
+    @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService"),
+    @NamedQuery(name = "Reservation.findByStatus", query = "SELECT r FROM Reservation r WHERE r.status = :status")})
 public class Reservation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,6 +62,11 @@ public class Reservation implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "special_service")
     private String specialService;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "status")
+    private String status;
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne
     private Room roomId;
@@ -75,10 +81,11 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public Reservation(Integer id, Date bookedDate, String specialService) {
+    public Reservation(Integer id, Date bookedDate, String specialService, String status) {
         this.id = id;
         this.bookedDate = bookedDate;
         this.specialService = specialService;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -119,6 +126,14 @@ public class Reservation implements Serializable {
 
     public void setSpecialService(String specialService) {
         this.specialService = specialService;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Room getRoomId() {

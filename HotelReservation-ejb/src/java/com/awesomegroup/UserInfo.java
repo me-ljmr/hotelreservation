@@ -71,8 +71,6 @@ public class UserInfo implements Serializable {
     @Column(name = "password")
     private String password;
     @OneToMany(mappedBy = "userId")
-    private Collection<RoomException> roomExceptionCollection;
-    @OneToMany(mappedBy = "userId")
     private Collection<Reservation> reservationCollection;
 
     public UserInfo() {
@@ -144,15 +142,6 @@ public class UserInfo implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @XmlTransient
-    public Collection<RoomException> getRoomExceptionCollection() {
-        return roomExceptionCollection;
-    }
-
-    public void setRoomExceptionCollection(Collection<RoomException> roomExceptionCollection) {
-        this.roomExceptionCollection = roomExceptionCollection;
     }
 
     @XmlTransient

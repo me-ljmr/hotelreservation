@@ -14,10 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByFloor", query = "SELECT r FROM Room r WHERE r.floor = :floor"),
-    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber"),
-    @NamedQuery(name = "Room.findByRoomTypeId", query = "SELECT r FROM Room r WHERE r.roomTypeId = :roomTypeId")})
+    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber")})
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,16 +45,18 @@ public class Room implements Serializable {
     private Integer id;
     @Column(name = "floor")
     private Integer floor;
+    @Size(max = 10)
     @Column(name = "room_number")
-    private Integer roomNumber;
-    @Column(name = "room_type_id")
-    private Integer roomTypeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
-    private Collection<RoomException> roomExceptionCollection;
+    private String roomNumber;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
     private Collection<RoomService> roomServiceCollection;
     @OneToMany(mappedBy = "roomId")
     private Collection<Reservation> reservationCollection;
+    @JoinColumn(name = "room_type_id", referencedColumnName = "id")
+    @ManyToOne
+    private RoomType roomTypeId;
+    @OneToMany(mappedBy = "roomId")
+    private Collection<RoomPhotoGallery> roomPhotoGalleryCollection;
 
     public Room() {
     }
@@ -77,29 +81,12 @@ public class Room implements Serializable {
         this.floor = floor;
     }
 
-    public Integer getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(Integer roomNumber) {
+    public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
-    }
-
-    public Integer getRoomTypeId() {
-        return roomTypeId;
-    }
-
-    public void setRoomTypeId(Integer roomTypeId) {
-        this.roomTypeId = roomTypeId;
-    }
-
-    @XmlTransient
-    public Collection<RoomException> getRoomExceptionCollection() {
-        return roomExceptionCollection;
-    }
-
-    public void setRoomExceptionCollection(Collection<RoomException> roomExceptionCollection) {
-        this.roomExceptionCollection = roomExceptionCollection;
     }
 
     @XmlTransient
@@ -118,6 +105,23 @@ public class Room implements Serializable {
 
     public void setReservationCollection(Collection<Reservation> reservationCollection) {
         this.reservationCollection = reservationCollection;
+    }
+
+    public RoomType getRoomTypeId() {
+        return roomTypeId;
+    }
+
+    public void setRoomTypeId(RoomType roomTypeId) {
+        this.roomTypeId = roomTypeId;
+    }
+
+    @XmlTransient
+    public Collection<RoomPhotoGallery> getRoomPhotoGalleryCollection() {
+        return roomPhotoGalleryCollection;
+    }
+
+    public void setRoomPhotoGalleryCollection(Collection<RoomPhotoGallery> roomPhotoGalleryCollection) {
+        this.roomPhotoGalleryCollection = roomPhotoGalleryCollection;
     }
 
     @Override

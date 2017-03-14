@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "HotelInfo.findAll", query = "SELECT h FROM HotelInfo h"),
     @NamedQuery(name = "HotelInfo.findById", query = "SELECT h FROM HotelInfo h WHERE h.id = :id"),
     @NamedQuery(name = "HotelInfo.findByTitle", query = "SELECT h FROM HotelInfo h WHERE h.title = :title"),
+    @NamedQuery(name = "HotelInfo.findByContactNumber", query = "SELECT h FROM HotelInfo h WHERE h.contactNumber = :contactNumber"),
+    @NamedQuery(name = "HotelInfo.findByEmail", query = "SELECT h FROM HotelInfo h WHERE h.email = :email"),
+    @NamedQuery(name = "HotelInfo.findByWebUrl", query = "SELECT h FROM HotelInfo h WHERE h.webUrl = :webUrl"),
     @NamedQuery(name = "HotelInfo.findByAddress", query = "SELECT h FROM HotelInfo h WHERE h.address = :address")})
 public class HotelInfo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -46,6 +50,27 @@ public class HotelInfo implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "logo")
+    private byte[] logo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "contact_number")
+    private String contactNumber;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "email")
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "web_url")
+    private String webUrl;
     @Size(max = 100)
     @Column(name = "address")
     private String address;
@@ -59,9 +84,13 @@ public class HotelInfo implements Serializable {
         this.id = id;
     }
 
-    public HotelInfo(Integer id, String title) {
+    public HotelInfo(Integer id, String title, byte[] logo, String contactNumber, String email, String webUrl) {
         this.id = id;
         this.title = title;
+        this.logo = logo;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.webUrl = webUrl;
     }
 
     public Integer getId() {
@@ -78,6 +107,38 @@ public class HotelInfo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
     }
 
     public String getAddress() {

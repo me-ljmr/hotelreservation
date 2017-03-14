@@ -26,13 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lujamanandhar
  */
 @Entity
-@Table(name = "photo_gallery")
+@Table(name = "room_photo_gallery")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PhotoGallery.findAll", query = "SELECT p FROM PhotoGallery p"),
-    @NamedQuery(name = "PhotoGallery.findById", query = "SELECT p FROM PhotoGallery p WHERE p.id = :id"),
-    @NamedQuery(name = "PhotoGallery.findByPhotoTitle", query = "SELECT p FROM PhotoGallery p WHERE p.photoTitle = :photoTitle")})
-public class PhotoGallery implements Serializable {
+    @NamedQuery(name = "RoomPhotoGallery.findAll", query = "SELECT r FROM RoomPhotoGallery r"),
+    @NamedQuery(name = "RoomPhotoGallery.findById", query = "SELECT r FROM RoomPhotoGallery r WHERE r.id = :id"),
+    @NamedQuery(name = "RoomPhotoGallery.findByPhotoTitle", query = "SELECT r FROM RoomPhotoGallery r WHERE r.photoTitle = :photoTitle")})
+public class RoomPhotoGallery implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,14 +45,14 @@ public class PhotoGallery implements Serializable {
     @Size(max = 20)
     @Column(name = "photo_title")
     private String photoTitle;
-    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne
-    private HotelInfo hotelId;
+    private Room roomId;
 
-    public PhotoGallery() {
+    public RoomPhotoGallery() {
     }
 
-    public PhotoGallery(Integer id) {
+    public RoomPhotoGallery(Integer id) {
         this.id = id;
     }
 
@@ -80,12 +80,12 @@ public class PhotoGallery implements Serializable {
         this.photoTitle = photoTitle;
     }
 
-    public HotelInfo getHotelId() {
-        return hotelId;
+    public Room getRoomId() {
+        return roomId;
     }
 
-    public void setHotelId(HotelInfo hotelId) {
-        this.hotelId = hotelId;
+    public void setRoomId(Room roomId) {
+        this.roomId = roomId;
     }
 
     @Override
@@ -98,10 +98,10 @@ public class PhotoGallery implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PhotoGallery)) {
+        if (!(object instanceof RoomPhotoGallery)) {
             return false;
         }
-        PhotoGallery other = (PhotoGallery) object;
+        RoomPhotoGallery other = (RoomPhotoGallery) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -110,7 +110,7 @@ public class PhotoGallery implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.PhotoGallery[ id=" + id + " ]";
+        return "com.awesomegroup.RoomPhotoGallery[ id=" + id + " ]";
     }
     
 }

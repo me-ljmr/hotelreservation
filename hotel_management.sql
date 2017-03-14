@@ -413,6 +413,51 @@ ALTER TABLE `room_service`
 
 ALTER TABLE `room` ADD FOREIGN KEY (`room_type_id`) REFERENCES `hotel_management`.`room_type`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+ALTER TABLE `photo_gallery` CHANGE `photo_url` `photo` BLOB NULL DEFAULT '';
+
+ALTER TABLE `hotel_info` ADD `logo` MEDIUMBLOB NOT NULL AFTER `title`, ADD `contact_number` VARCHAR(100) NOT NULL AFTER `logo`, ADD `email` VARCHAR(100) NOT NULL AFTER `contact_number`, ADD `web_url` VARCHAR(100) NOT NULL AFTER `email`;
+
+
+/* SAMPLE RECORDS */
+
+CREATE TABLE `room_photo_gallery` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `photo` blob,
+  `photo_title` varchar(20) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `photo_gallery`
+--
+ALTER TABLE `room_photo_gallery`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_id` (`room_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `photo_gallery`
+--
+ALTER TABLE `room_photo_gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `photo_gallery`
+--
+ALTER TABLE `room_photo_gallery`
+  ADD CONSTRAINT `room_photo_gallery_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);	
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
