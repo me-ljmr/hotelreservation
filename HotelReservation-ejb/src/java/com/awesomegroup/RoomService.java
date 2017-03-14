@@ -12,10 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,9 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RoomService.findAll", query = "SELECT r FROM RoomService r"),
-    @NamedQuery(name = "RoomService.findById", query = "SELECT r FROM RoomService r WHERE r.id = :id"),
-    @NamedQuery(name = "RoomService.findByRoomId", query = "SELECT r FROM RoomService r WHERE r.roomId = :roomId"),
-    @NamedQuery(name = "RoomService.findByServiceId", query = "SELECT r FROM RoomService r WHERE r.serviceId = :serviceId")})
+    @NamedQuery(name = "RoomService.findById", query = "SELECT r FROM RoomService r WHERE r.id = :id")})
 public class RoomService implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,26 +36,18 @@ public class RoomService implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "room_id")
-    private int roomId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "service_id")
-    private int serviceId;
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Room roomId;
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Service serviceId;
 
     public RoomService() {
     }
 
     public RoomService(Integer id) {
         this.id = id;
-    }
-
-    public RoomService(Integer id, int roomId, int serviceId) {
-        this.id = id;
-        this.roomId = roomId;
-        this.serviceId = serviceId;
     }
 
     public Integer getId() {
@@ -67,19 +58,19 @@ public class RoomService implements Serializable {
         this.id = id;
     }
 
-    public int getRoomId() {
+    public Room getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Room roomId) {
         this.roomId = roomId;
     }
 
-    public int getServiceId() {
+    public Service getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(int serviceId) {
+    public void setServiceId(Service serviceId) {
         this.serviceId = serviceId;
     }
 

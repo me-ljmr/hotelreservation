@@ -6,6 +6,7 @@
 package com.awesomegroup;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,10 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,6 +49,8 @@ public class HotelInfo implements Serializable {
     @Size(max = 100)
     @Column(name = "address")
     private String address;
+    @OneToMany(mappedBy = "hotelId")
+    private Collection<PhotoGallery> photoGalleryCollection;
 
     public HotelInfo() {
     }
@@ -81,6 +86,15 @@ public class HotelInfo implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @XmlTransient
+    public Collection<PhotoGallery> getPhotoGalleryCollection() {
+        return photoGalleryCollection;
+    }
+
+    public void setPhotoGalleryCollection(Collection<PhotoGallery> photoGalleryCollection) {
+        this.photoGalleryCollection = photoGalleryCollection;
     }
 
     @Override

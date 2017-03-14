@@ -6,6 +6,7 @@
 package com.awesomegroup;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,11 +16,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -67,6 +70,10 @@ public class UserInfo implements Serializable {
     @Size(max = 50)
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "userId")
+    private Collection<RoomException> roomExceptionCollection;
+    @OneToMany(mappedBy = "userId")
+    private Collection<Reservation> reservationCollection;
 
     public UserInfo() {
     }
@@ -137,6 +144,24 @@ public class UserInfo implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @XmlTransient
+    public Collection<RoomException> getRoomExceptionCollection() {
+        return roomExceptionCollection;
+    }
+
+    public void setRoomExceptionCollection(Collection<RoomException> roomExceptionCollection) {
+        this.roomExceptionCollection = roomExceptionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reservation> getReservationCollection() {
+        return reservationCollection;
+    }
+
+    public void setReservationCollection(Collection<Reservation> reservationCollection) {
+        this.reservationCollection = reservationCollection;
     }
 
     @Override

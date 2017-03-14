@@ -6,7 +6,9 @@
 package com.awesomegroup;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +47,12 @@ public class Room implements Serializable {
     private Integer roomNumber;
     @Column(name = "room_type_id")
     private Integer roomTypeId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
+    private Collection<RoomException> roomExceptionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
+    private Collection<RoomService> roomServiceCollection;
+    @OneToMany(mappedBy = "roomId")
+    private Collection<Reservation> reservationCollection;
 
     public Room() {
     }
@@ -81,6 +91,33 @@ public class Room implements Serializable {
 
     public void setRoomTypeId(Integer roomTypeId) {
         this.roomTypeId = roomTypeId;
+    }
+
+    @XmlTransient
+    public Collection<RoomException> getRoomExceptionCollection() {
+        return roomExceptionCollection;
+    }
+
+    public void setRoomExceptionCollection(Collection<RoomException> roomExceptionCollection) {
+        this.roomExceptionCollection = roomExceptionCollection;
+    }
+
+    @XmlTransient
+    public Collection<RoomService> getRoomServiceCollection() {
+        return roomServiceCollection;
+    }
+
+    public void setRoomServiceCollection(Collection<RoomService> roomServiceCollection) {
+        this.roomServiceCollection = roomServiceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reservation> getReservationCollection() {
+        return reservationCollection;
+    }
+
+    public void setReservationCollection(Collection<Reservation> reservationCollection) {
+        this.reservationCollection = reservationCollection;
     }
 
     @Override

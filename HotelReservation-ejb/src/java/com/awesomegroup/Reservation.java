@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -35,8 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reservation.findByBookedDate", query = "SELECT r FROM Reservation r WHERE r.bookedDate = :bookedDate"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
-    @NamedQuery(name = "Reservation.findByRoomId", query = "SELECT r FROM Reservation r WHERE r.roomId = :roomId"),
-    @NamedQuery(name = "Reservation.findByUserId", query = "SELECT r FROM Reservation r WHERE r.userId = :userId"),
     @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService")})
 public class Reservation implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -56,15 +56,17 @@ public class Reservation implements Serializable {
     @Column(name = "date_till")
     @Temporal(TemporalType.DATE)
     private Date dateTill;
-    @Column(name = "room_id")
-    private Integer roomId;
-    @Column(name = "user_id")
-    private Integer userId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "special_service")
     private String specialService;
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @ManyToOne
+    private Room roomId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private UserInfo userId;
 
     public Reservation() {
     }
@@ -111,28 +113,28 @@ public class Reservation implements Serializable {
         this.dateTill = dateTill;
     }
 
-    public Integer getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public String getSpecialService() {
         return specialService;
     }
 
     public void setSpecialService(String specialService) {
         this.specialService = specialService;
+    }
+
+    public Room getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Room roomId) {
+        this.roomId = roomId;
+    }
+
+    public UserInfo getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UserInfo userId) {
+        this.userId = userId;
     }
 
     @Override

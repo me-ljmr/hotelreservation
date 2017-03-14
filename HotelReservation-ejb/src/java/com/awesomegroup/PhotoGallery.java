@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "PhotoGallery.findAll", query = "SELECT p FROM PhotoGallery p"),
     @NamedQuery(name = "PhotoGallery.findById", query = "SELECT p FROM PhotoGallery p WHERE p.id = :id"),
-    @NamedQuery(name = "PhotoGallery.findByHotelId", query = "SELECT p FROM PhotoGallery p WHERE p.hotelId = :hotelId"),
     @NamedQuery(name = "PhotoGallery.findByPhotoUrl", query = "SELECT p FROM PhotoGallery p WHERE p.photoUrl = :photoUrl"),
     @NamedQuery(name = "PhotoGallery.findByPhotoTitle", query = "SELECT p FROM PhotoGallery p WHERE p.photoTitle = :photoTitle")})
 public class PhotoGallery implements Serializable {
@@ -38,14 +39,15 @@ public class PhotoGallery implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "hotel_id")
-    private Integer hotelId;
     @Size(max = 100)
     @Column(name = "photo_url")
     private String photoUrl;
     @Size(max = 20)
     @Column(name = "photo_title")
     private String photoTitle;
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    @ManyToOne
+    private HotelInfo hotelId;
 
     public PhotoGallery() {
     }
@@ -62,14 +64,6 @@ public class PhotoGallery implements Serializable {
         this.id = id;
     }
 
-    public Integer getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(Integer hotelId) {
-        this.hotelId = hotelId;
-    }
-
     public String getPhotoUrl() {
         return photoUrl;
     }
@@ -84,6 +78,14 @@ public class PhotoGallery implements Serializable {
 
     public void setPhotoTitle(String photoTitle) {
         this.photoTitle = photoTitle;
+    }
+
+    public HotelInfo getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(HotelInfo hotelId) {
+        this.hotelId = hotelId;
     }
 
     @Override

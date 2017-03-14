@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 14, 2017 at 02:13 AM
+-- Generation Time: Mar 14, 2017 at 02:50 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -47,7 +47,7 @@ CREATE TABLE `hotel_info` (
   `id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL DEFAULT '',
   `address` varchar(100) DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `hotel_info`:
@@ -64,10 +64,12 @@ CREATE TABLE `photo_gallery` (
   `hotel_id` int(11) DEFAULT NULL,
   `photo_url` varchar(100) DEFAULT '',
   `photo_title` varchar(20) DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `photo_gallery`:
+--   `hotel_id`
+--       `hotel_info` -> `id`
 --   `hotel_id`
 --       `hotel_info` -> `id`
 --
@@ -86,10 +88,14 @@ CREATE TABLE `reservation` (
   `room_id` int(6) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `special_service` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `reservation`:
+--   `room_id`
+--       `room` -> `id`
+--   `user_id`
+--       `user_info` -> `id`
 --   `room_id`
 --       `room` -> `id`
 --   `user_id`
@@ -107,7 +113,7 @@ CREATE TABLE `room` (
   `floor` int(2) DEFAULT NULL,
   `room_number` int(5) DEFAULT '0',
   `room_type_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `room`:
@@ -125,7 +131,7 @@ CREATE TABLE `room_calendar` (
   `id` int(11) NOT NULL,
   `discount_date` date DEFAULT NULL,
   `promotion_percentage` int(11) DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `room_calendar`:
@@ -143,7 +149,7 @@ CREATE TABLE `room_exception` (
   `user_id` int(11) DEFAULT NULL,
   `notes` varchar(100) DEFAULT NULL,
   `room_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `room_exception`:
@@ -151,6 +157,10 @@ CREATE TABLE `room_exception` (
 --       `room` -> `id`
 --   `user_id`
 --       `user_info` -> `id`
+--   `user_id`
+--       `user_info` -> `id`
+--   `room_id`
+--       `room` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -171,6 +181,10 @@ CREATE TABLE `room_service` (
 --       `room` -> `id`
 --   `service_id`
 --       `service` -> `id`
+--   `room_id`
+--       `room` -> `id`
+--   `service_id`
+--       `service` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -183,7 +197,7 @@ CREATE TABLE `room_type` (
   `id` int(11) NOT NULL,
   `description` varchar(100) DEFAULT '""',
   `rate` decimal(3,2) DEFAULT '0.00'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `room_type`:
@@ -220,7 +234,7 @@ CREATE TABLE `user_info` (
   `date_of_birth` date DEFAULT NULL,
   `email` varchar(120) DEFAULT '',
   `password` varchar(50) DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- RELATIONS FOR TABLE `user_info`:
@@ -247,15 +261,15 @@ ALTER TABLE `hotel_info`
 --
 ALTER TABLE `photo_gallery`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_photo_gallery` (`hotel_id`);
+  ADD KEY `hotel_id` (`hotel_id`);
 
 --
 -- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_reservation_room_id` (`room_id`),
-  ADD KEY `fk_reservation_user_id` (`user_id`);
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `room`
@@ -275,14 +289,16 @@ ALTER TABLE `room_calendar`
 --
 ALTER TABLE `room_exception`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_room_exception_user_id` (`user_id`),
-  ADD KEY `fk_exception_room_id` (`room_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `room_id` (`room_id`);
 
 --
 -- Indexes for table `room_service`
 --
 ALTER TABLE `room_service`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_id` (`room_id`) USING BTREE,
+  ADD KEY `service_id` (`service_id`);
 
 --
 -- Indexes for table `room_type`
@@ -361,6 +377,37 @@ ALTER TABLE `service`
 --
 ALTER TABLE `user_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `photo_gallery`
+--
+ALTER TABLE `photo_gallery`
+  ADD CONSTRAINT `photo_gallery_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel_info` (`id`);
+
+--
+-- Constraints for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
+  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`);
+
+--
+-- Constraints for table `room_exception`
+--
+ALTER TABLE `room_exception`
+  ADD CONSTRAINT `room_exception_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
+  ADD CONSTRAINT `room_exception_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
+
+--
+-- Constraints for table `room_service`
+--
+ALTER TABLE `room_service`
+  ADD CONSTRAINT `room_service_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
+  ADD CONSTRAINT `room_service_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

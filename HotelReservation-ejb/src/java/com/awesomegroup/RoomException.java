@@ -13,12 +13,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RoomException.findAll", query = "SELECT r FROM RoomException r"),
     @NamedQuery(name = "RoomException.findById", query = "SELECT r FROM RoomException r WHERE r.id = :id"),
     @NamedQuery(name = "RoomException.findByOnDate", query = "SELECT r FROM RoomException r WHERE r.onDate = :onDate"),
-    @NamedQuery(name = "RoomException.findByUserId", query = "SELECT r FROM RoomException r WHERE r.userId = :userId"),
-    @NamedQuery(name = "RoomException.findByNotes", query = "SELECT r FROM RoomException r WHERE r.notes = :notes"),
-    @NamedQuery(name = "RoomException.findByRoomId", query = "SELECT r FROM RoomException r WHERE r.roomId = :roomId")})
+    @NamedQuery(name = "RoomException.findByNotes", query = "SELECT r FROM RoomException r WHERE r.notes = :notes")})
 public class RoomException implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,26 +45,21 @@ public class RoomException implements Serializable {
     @Column(name = "on_date")
     @Temporal(TemporalType.DATE)
     private Date onDate;
-    @Column(name = "user_id")
-    private Integer userId;
     @Size(max = 100)
     @Column(name = "notes")
     private String notes;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "room_id")
-    private int roomId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private UserInfo userId;
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Room roomId;
 
     public RoomException() {
     }
 
     public RoomException(Integer id) {
         this.id = id;
-    }
-
-    public RoomException(Integer id, int roomId) {
-        this.id = id;
-        this.roomId = roomId;
     }
 
     public Integer getId() {
@@ -84,14 +78,6 @@ public class RoomException implements Serializable {
         this.onDate = onDate;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -100,11 +86,19 @@ public class RoomException implements Serializable {
         this.notes = notes;
     }
 
-    public int getRoomId() {
+    public UserInfo getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UserInfo userId) {
+        this.userId = userId;
+    }
+
+    public Room getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Room roomId) {
         this.roomId = roomId;
     }
 
