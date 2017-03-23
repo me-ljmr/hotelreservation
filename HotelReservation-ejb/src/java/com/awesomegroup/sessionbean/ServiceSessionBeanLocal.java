@@ -5,7 +5,7 @@
  */
 package com.awesomegroup.sessionbean;
 
-import com.awesomegroup.entity.Room;
+import com.awesomegroup.entity.Service;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,18 +14,12 @@ import javax.ejb.Local;
  * @author lujamanandhar
  */
 @Local
-public interface RoomSessionBeanLocal {
+public interface ServiceSessionBeanLocal {
      List getAll();
 
-    Room get(int id);
+    Service get(int id);
     
     void delete(int id);
 
-    void save(Room room);
-    
-    List getRoomsByFloorNumber(int floor);
-    
-    Room getDetail(String roomNumber);
-    
-     
+    void save(Service service);
 }

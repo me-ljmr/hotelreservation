@@ -6,6 +6,7 @@
 package com.awesomegroup.sessionbean;
 
 import com.awesomegroup.entity.RoomType;
+import com.awesomegroup.entity.Service;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -22,16 +23,13 @@ import javax.persistence.Query;
 @TransactionManagement(value=TransactionManagementType.CONTAINER)
 @LocalBean
 @Stateless
-public class RoomTypeSessionBean implements RoomTypeSessionBeanRemote, RoomTypeSessionBeanLocal {
-
-    @PersistenceContext(unitName="HotelReservation-ejbPU")
+public class ServiceSessionBean implements ServiceSessionBeanRemote, ServiceSessionBeanLocal {
+ @PersistenceContext(unitName="HotelReservation-ejbPU")
     private EntityManager em ;
-
-
     @Override
-    public RoomType get(int id) {
-        RoomType roomType = (RoomType)em.find(RoomType.class, id);
-        return roomType;
+    public Service get(int id) {
+        Service service = (Service)em.find(Service.class, id);
+        return service;
     }
     
     @Override
@@ -46,11 +44,11 @@ public class RoomTypeSessionBean implements RoomTypeSessionBeanRemote, RoomTypeS
     }
 
     @Override
-    public void save(RoomType roomType) {
-        if(roomType.getId() == null || roomType.getId() == 0) {
-            em.persist(roomType);
+    public void save(Service service) {
+        if(service.getId() == null || service.getId() == 0) {
+            em.persist(service);
         } else {
-            em.merge(roomType);
+            em.merge(service);
         }
     
     }
@@ -59,7 +57,4 @@ public class RoomTypeSessionBean implements RoomTypeSessionBeanRemote, RoomTypeS
     public void save(Object roomType) {
         save((RoomType) roomType);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

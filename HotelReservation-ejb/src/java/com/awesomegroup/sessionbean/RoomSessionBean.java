@@ -72,6 +72,8 @@ public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLo
         Query query = em.createNamedQuery("Room.findByFloor");
         return (Room)query.getSingleResult();
     }
+
+  
     
 
 }

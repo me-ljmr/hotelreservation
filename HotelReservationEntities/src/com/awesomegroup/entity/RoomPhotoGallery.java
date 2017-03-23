@@ -11,6 +11,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RoomPhotoGallery.findAll", query = "SELECT r FROM RoomPhotoGallery r"),
     @NamedQuery(name = "RoomPhotoGallery.findById", query = "SELECT r FROM RoomPhotoGallery r WHERE r.id = :id"),
+    @NamedQuery(name = "RoomPhotoGallery.findByRoomNumber", query = "SELECT r FROM RoomPhotoGallery r WHERE r.room.roomNumber = :roomNumber"),
+    @NamedQuery(name = "RoomPhotoGallery.findByRoomId", query = "SELECT r FROM RoomPhotoGallery r WHERE r.room_id = :roomId"),
     @NamedQuery(name = "RoomPhotoGallery.findByPhotoTitle", query = "SELECT r FROM RoomPhotoGallery r WHERE r.photoTitle = :photoTitle")})
 public class RoomPhotoGallery implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,7 +52,7 @@ public class RoomPhotoGallery implements Serializable {
     private String photoTitle;
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne
-    private Room roomId;
+    private Room room;
 
     public RoomPhotoGallery() {
     }
@@ -82,12 +85,12 @@ public class RoomPhotoGallery implements Serializable {
         this.photoTitle = photoTitle;
     }
 
-    public Room getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(Room roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

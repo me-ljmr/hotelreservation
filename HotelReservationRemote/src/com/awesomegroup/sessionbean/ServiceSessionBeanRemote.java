@@ -5,27 +5,20 @@
  */
 package com.awesomegroup.sessionbean;
 
-import com.awesomegroup.entity.Room;
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author lujamanandhar
  */
-@Local
-public interface RoomSessionBeanLocal {
+@Remote
+public interface ServiceSessionBeanRemote {
      List getAll();
 
-    Room get(int id);
+    Object get(int id);
     
     void delete(int id);
 
-    void save(Room room);
-    
-    List getRoomsByFloorNumber(int floor);
-    
-    Room getDetail(String roomNumber);
-    
-     
+    void save(Object service);
 }
