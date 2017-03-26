@@ -5,8 +5,8 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>HotelReservation-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">reference.HotelReservationEntities.jar</included-library>
             <included-library dirs="200">reference.HotelReservationRemote.jar</included-library>
+            <included-library dirs="100">reference.HotelReservationEntities-ejbmodule.dist</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
@@ -16,12 +16,12 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>HotelReservationEntities</foreign-project>
+                <foreign-project>HotelReservationEntities-ejbmodule</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
-                <target>jar</target>
+                <target>dist</target>
                 <clean-target>clean</clean-target>
-                <id>jar</id>
+                <id>dist</id>
             </reference>
             <reference>
                 <foreign-project>HotelReservationRemote</foreign-project>

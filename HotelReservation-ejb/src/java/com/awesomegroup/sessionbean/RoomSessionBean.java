@@ -23,9 +23,10 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLocal {
-
+ 
+    
     @PersistenceContext(unitName="HotelReservation-ejbPU")
-    private EntityManager em ;
+    private EntityManager em;
 
     
 
@@ -37,7 +38,8 @@ public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLo
     
     @Override
     public List getAll() {
-        Query query = em.createNamedQuery("Room.findAll");
+         
+        Query query = em.createNamedQuery("Room.findAll",Room.class);
         return query.getResultList();
     }
     
