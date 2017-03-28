@@ -16,10 +16,9 @@
         <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapcss" />
         <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
         <spring:url value="/resources/js/jquery.js" var="jquery"/> 
-        
+        <spring:url value="/hotelsys/admin" var="adminrootpath" />    
         <script src="${bootstrapjs}"></script> 
-        <script src="${jquery}"></script> 
-        
+        <script src="${jquery}"></script>  
         <link href="${bootstrapcss}" rel="stylesheet" /> 
          
         <title>Rooms</title>
@@ -27,31 +26,45 @@
 
     <body>
         <div class="container">
-            <h1>${title}</h1>
+            <h2>Room List</h2>
+            <a href="${adminrootpath}/rooms/new" class="pull-right " >Create New</a>
             <div class="row">
-                <c:if test = "${error != ''}">
-                    <div>${error}</div>
-                </c:if>
-
-                <c:if test="${rooms eq null}">
-                    <span class="alert alert-danger">Room list is empty</span>
+                <c:if test="${roomsaved != null}">
+                    <label class="alert alert-dismissable alert-success">${roomsaved}</label>
                 </c:if>
             </div>
             <div class="row">
                 <table class="table">
+                    
                     <tr>
                         <th>Room ID</th>
                         <th>Room Number</th>
                         <th>Floor Number</th>
                         
                         <th>Type</th>
+                        <th>Action</th>
                     </tr>
                     
+                            
+                <c:if test = "${error != null}">
+                    <label class="alert alert-danger">${error}</label>
+                </c:if>
+
+                <c:if test="${rooms eq null}">
+                    <tr>
+                        <td colspan="5">
+                    <span class="label label-info">Room list is empty</span>
+                    
+                        </td>
+                    </tr>
+                </c:if>
+             
+                            
                 
                     <c:forEach var="room" items="${rooms}">
                         <tr>
                             
-                            <td>${room.Id}</td>
+                            <td>${room.id}</td>
                             <td>${room.roomNumber}</td>
                             <td>${room.floor}</td>
 

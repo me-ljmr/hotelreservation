@@ -18,12 +18,8 @@
                     <file>${reference.HotelReservationRemote.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
-                <library dirs="100">
-                    <file>${reference.HotelReservationEntities-ejbmodule.dist}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="100">
-                    <file>${reference.HotelReservation-ejb.dist}</file>
+                <library dirs="200">
+                    <file>${reference.HotelReservationEntities.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
@@ -37,20 +33,12 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>HotelReservation-ejb</foreign-project>
+                <foreign-project>HotelReservationEntities</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
-                <target>dist</target>
+                <target>jar</target>
                 <clean-target>clean</clean-target>
-                <id>dist</id>
-            </reference>
-            <reference>
-                <foreign-project>HotelReservationEntities-ejbmodule</foreign-project>
-                <artifact-type>jar</artifact-type>
-                <script>build.xml</script>
-                <target>dist</target>
-                <clean-target>clean</clean-target>
-                <id>dist</id>
+                <id>jar</id>
             </reference>
             <reference>
                 <foreign-project>HotelReservationRemote</foreign-project>

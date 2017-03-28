@@ -25,6 +25,6 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>hotelsys/rooms</welcome-file>
+        <welcome-file>hotelsys/admin/rooms</welcome-file>
     </welcome-file-list>
 </web-app>

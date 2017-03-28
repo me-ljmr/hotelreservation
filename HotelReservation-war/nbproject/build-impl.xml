@@ -853,18 +853,16 @@ exists or setup the property manually. For example like this:
                 COMPILATION SECTION
             -->
     <target depends="init" if="no.dist.ear.dir" name="deps-module-jar" unless="no.deps">
-        <ant antfile="${project.HotelReservation-ejb}/build.xml" inheritall="false" target="dist"/>
-        <ant antfile="${project.HotelReservationEntities-ejbmodule}/build.xml" inheritall="false" target="dist"/>
+        <ant antfile="${project.HotelReservationEntities}/build.xml" inheritall="false" target="jar">
+            <property name="deploy.on.save" value="false"/>
+        </ant>
         <ant antfile="${project.HotelReservationRemote}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
     </target>
     <target depends="init" if="dist.ear.dir" name="deps-ear-jar" unless="no.deps">
-        <ant antfile="${project.HotelReservation-ejb}/build.xml" inheritall="false" target="dist-ear">
-            <property location="${build.dir}" name="dist.ear.dir"/>
-        </ant>
-        <ant antfile="${project.HotelReservationEntities-ejbmodule}/build.xml" inheritall="false" target="dist-ear">
-            <property location="${build.dir}" name="dist.ear.dir"/>
+        <ant antfile="${project.HotelReservationEntities}/build.xml" inheritall="false" target="jar">
+            <property name="deploy.on.save" value="false"/>
         </ant>
         <ant antfile="${project.HotelReservationRemote}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
@@ -1016,8 +1014,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.spring-framework400.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.jstl.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${reference.HotelReservationRemote.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${reference.HotelReservationEntities-ejbmodule.dist}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}"/>
-        <copyfiles files="${reference.HotelReservation-ejb.dist}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}"/>
+        <copyfiles files="${reference.HotelReservationEntities.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
@@ -1025,8 +1022,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.spring-framework400.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jstl.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${reference.HotelReservationRemote.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${reference.HotelReservationEntities-ejbmodule.dist}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${reference.HotelReservation-ejb.dist}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${reference.HotelReservationEntities.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
@@ -1440,8 +1436,7 @@ exists or setup the property manually. For example like this:
                 CLEANUP SECTION
             -->
     <target depends="init" name="deps-clean" unless="no.deps">
-        <ant antfile="${project.HotelReservation-ejb}/build.xml" inheritall="false" target="clean"/>
-        <ant antfile="${project.HotelReservationEntities-ejbmodule}/build.xml" inheritall="false" target="clean"/>
+        <ant antfile="${project.HotelReservationEntities}/build.xml" inheritall="false" target="clean"/>
         <ant antfile="${project.HotelReservationRemote}/build.xml" inheritall="false" target="clean"/>
     </target>
     <target depends="init" name="do-clean">
