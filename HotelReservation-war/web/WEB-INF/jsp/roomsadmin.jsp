@@ -27,7 +27,7 @@
     <body>
         <div class="container">
             <h2>Room List</h2>
-            <a href="${adminrootpath}/rooms/new" class="pull-right " >Create New</a>
+            <a href="${adminrootpath}/rooms/new" class="pull-right btn btn-success" >Create New</a>
             <div class="row">
                 <c:if test="${roomsaved != null}">
                     <label class="alert alert-dismissable alert-success">${roomsaved}</label>
@@ -68,7 +68,8 @@
                             <td>${room.roomNumber}</td>
                             <td>${room.floor}</td>
 
-                            <td>${roomTypeId.description}</td>
+                            <td>${room.roomTypeId.description}-${room.roomTypeId.rate}</td>
+                            <td><a href="/rooms/edit/${room.id}" class="btn btn-primary">Edit</a></td>
                         </tr>
                     </c:forEach>
                     </table>

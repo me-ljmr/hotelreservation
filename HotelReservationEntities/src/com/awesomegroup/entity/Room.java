@@ -57,7 +57,7 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "roomId")
     private Collection<Reservation> reservationCollection;
     @JoinColumn(name = "room_type_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne()
     private RoomType roomTypeId;
     @OneToMany(mappedBy = "roomId")
     private Collection<RoomPhotoGallery> roomPhotoGalleryCollection;
