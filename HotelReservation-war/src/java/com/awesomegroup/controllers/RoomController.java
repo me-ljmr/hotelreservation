@@ -24,8 +24,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import sun.misc.BASE64Decoder;
 
@@ -106,7 +104,7 @@ public class RoomController {
         return decodedBytes;
     }
     @RequestMapping(value="/admin/rooms/new" , method=RequestMethod.POST)
-    public String saveRoom(Model model, MultipartHttpServletRequest request){
+    public String saveRoom(Model model, HttpServletRequest request){
         String roomnumber = request.getParameter("roomnumber");
         int floor = Integer.parseInt(request.getParameter("floor"));
         RoomType roomtype =(RoomType) getRoomTypeSessionRemote().get(Integer.parseInt(request.getParameter("roomtype")));
