@@ -124,6 +124,9 @@ public class Room implements Serializable {
         return roomPhotoGalleryCollection;
     }
 
+    public void addAPicture(RoomPhotoGallery roompicgallery){
+        roomPhotoGalleryCollection.add(roompicgallery);
+    }
     public void setRoomPhotoGalleryCollection(Collection<RoomPhotoGallery> roomPhotoGalleryCollection) {
         this.roomPhotoGalleryCollection = roomPhotoGalleryCollection;
     }
