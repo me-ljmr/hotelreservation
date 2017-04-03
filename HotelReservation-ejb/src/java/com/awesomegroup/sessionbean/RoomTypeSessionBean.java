@@ -30,14 +30,14 @@ public class RoomTypeSessionBean implements RoomTypeSessionBeanRemote, RoomTypeS
 
     @Override
     public RoomType get(int id) {
-        RoomType roomType = (RoomType)em.find(RoomType.class, id);
-        return roomType;
+         
+        return (RoomType)em.find(RoomType.class, id);
     }
     
     @Override
     public List getAll() {
-        Query query = em.createNamedQuery("RoomType.findAll");
-        return query.getResultList();
+        
+        return em.createNamedQuery("RoomType.findAll").getResultList();
     }
     
     @Override

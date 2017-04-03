@@ -32,15 +32,15 @@ public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLo
 
     @Override
     public Room get(int id) {
-        Room room = (Room)em.find(Room.class, id);
-        return room;
+         
+        return (Room)em.find(Room.class, id);
     }
     
     @Override
     public List getAll() {
          
-        Query query = em.createNamedQuery("Room.findAll",Room.class);
-        return query.getResultList();
+          
+        return em.createNamedQuery("Room.findAll",Room.class).getResultList();
     }
     
     @Override

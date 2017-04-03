@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package com.awesomegroup.sessionbean;
-
-import com.awesomegroup.entity.RoomType;
+ 
 import com.awesomegroup.entity.Service;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -27,15 +26,14 @@ public class ServiceSessionBean implements ServiceSessionBeanRemote, ServiceSess
  @PersistenceContext(unitName="HotelReservation-ejbPU")
     private EntityManager em ;
     @Override
-    public Service get(int id) {
-        Service service = (Service)em.find(Service.class, id);
-        return service;
+    public Service get(int id) { 
+        return (Service)em.find(Service.class, id);
     }
     
     @Override
     public List getAll() {
-        Query query = em.createNamedQuery("RoomType.findAll");
-        return query.getResultList();
+         
+        return em.createNamedQuery("Service.findAll").getResultList();
     }
     
     @Override
@@ -54,7 +52,7 @@ public class ServiceSessionBean implements ServiceSessionBeanRemote, ServiceSess
     }
     
     @Override
-    public void save(Object roomType) {
-        save((RoomType) roomType);
+    public void save(Object service) {
+        save((Service) service);
     }
 }

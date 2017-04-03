@@ -13,7 +13,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 
 /**
@@ -30,14 +29,21 @@ public class AdminSessionBean implements AdminSessionBeanRemote, AdminSessionBea
 
     @Override
     public List findAll() {
-        Query query = em.createNamedQuery("AdminInfo.findAll");
-        return query.getResultList();
+         
+        return em.createNamedQuery("AdminInfo.findAll").getResultList();
     }
 
     @Override
     public AdminInfo find(int id) {
-        AdminInfo admin = (AdminInfo) em.find(AdminInfo.class, id);
-        return admin;
+        
+        return (AdminInfo) em.find(AdminInfo.class, id);
+    }
+    
+    @Override
+    public AdminInfo find(String loginname){
+        return (AdminInfo )em.createNamedQuery("AdminInfo.findByLoginName")
+                .setParameter("loginName", loginname)
+                .getSingleResult();
     }
 
     @Override

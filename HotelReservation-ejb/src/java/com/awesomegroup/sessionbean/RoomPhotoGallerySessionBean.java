@@ -30,8 +30,8 @@ public class RoomPhotoGallerySessionBean implements RoomPhotoGalleryRemote, Room
 
     @Override
     public RoomPhotoGallery get(int id) {
-        RoomPhotoGallery roomPhotoGallery = (RoomPhotoGallery)em.find(RoomPhotoGallery.class, id);
-        return roomPhotoGallery;
+         
+        return (RoomPhotoGallery)em.find(RoomPhotoGallery.class, id);
     }
     
      
@@ -58,15 +58,15 @@ public class RoomPhotoGallerySessionBean implements RoomPhotoGalleryRemote, Room
 
     @Override
     public List getAllPicturesById(int roomId) {
-        Query query = em.createNamedQuery("RoomPhotoGallery.findByRoomId").setParameter("roomId", roomId);
+         
         
-        return query.getResultList();
+        return em.createNamedQuery("RoomPhotoGallery.findByRoomId").setParameter("roomId", roomId).getResultList();
     }
 
     @Override
     public List getAllPicturesFor(String roomNumber) {
-        Query query = em.createNamedQuery("RoomPhotoGallery.findByRoomNumber").setParameter("roomNumber", roomNumber);
-        return query.getResultList();
+         
+        return em.createNamedQuery("RoomPhotoGallery.findByRoomNumber").setParameter("roomNumber", roomNumber).getResultList();
     }
      
 }

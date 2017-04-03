@@ -11,10 +11,12 @@ package com.awesomegroup.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,10 +53,11 @@ public class RoomType implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "rate")
     private BigDecimal rate;
-    @OneToMany(mappedBy = "roomTypeId")
+    @OneToMany(mappedBy = "roomTypeId",fetch = FetchType.EAGER )
     private Collection<Room> roomCollection;
 
     public RoomType() {
+         roomCollection = new ArrayList<Room>();
     }
 
     public RoomType(Integer id) {

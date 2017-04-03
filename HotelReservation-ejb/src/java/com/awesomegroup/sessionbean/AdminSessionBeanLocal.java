@@ -18,8 +18,8 @@ public interface AdminSessionBeanLocal {
 
     List findAll();
 
-    AdminInfo find(int id);
-
+    Object find(int id);
+    Object find(String loginname);
     void delete(int id);
 
     void save(AdminInfo adminInfo);

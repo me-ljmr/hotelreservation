@@ -9,10 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="java.util.List"%>
-<%@page import="com.awesomegroup.sessionbean.RoomSessionBeanRemote"%>
-<%@page import="com.awesomegroup.entity.Room"%>
-<%@page import="com.awesomegroup.sessionbean.HotelSessionBeanRemote"%>
-<%@page import="javax.naming.InitialContext"%>
+ 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -113,7 +110,7 @@
                                 <td>${room.roomNumber}</td>
                                 <td>${room.floor}</td>
 
-                                <td>${room.roomTypeId.description}-${room.roomTypeId.rate}</td>
+                                <td>${room.roomTypeId.description} - $${room.roomTypeId.rate}</td>
                                 <td><a href="${adminrootpath}/rooms/edit/${room.id}" class="btn btn-primary">Edit</a></td>
                             </tr>
                         </c:forEach>

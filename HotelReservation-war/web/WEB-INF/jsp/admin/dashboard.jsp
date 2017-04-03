@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Room Information</title>
+    <title>Admin Dashboard</title>
     <!-- Core CSS - Include with every page -->
     <spring:url value="/assets/plugins/bootstrap/bootstrap.css" var="bootstrapcss" />
     <spring:url value="/assets/font-awesome/css/font-awesome.css" var="fontawesomecss" />
@@ -52,47 +52,40 @@
         <!-- end navbar side -->
         <!--  page-wrapper -->
         <div id="page-wrapper">
-
             <div class="row">
                 <!-- Page Header -->
                 <div class="col-lg-12">
-                    <h1 class="page-header">Modify Room Information</h1>
+                    <h1 class="page-header">Dashboard</h1>
                 </div>
                 <!--End Page Header -->
             </div>
-
+            
             <div class="row">
-                <div class="col-md-6">
-                
-               
-                    <form class="form-horizontal"  action="${adminrootpath}/rooms/new" method="post">
-                        <div class="form-group">
-                        <label >Room Number:</label><input type="text" name="roomnumber" value="${room.roomNumber}" class="form-control"/> 
-                        </div>
-                        <div class="form-group">
-                        <label >Floor:</label><input type="text" name="floor" value="${room.floor}" class="form-control"/> 
-                        </div>
-                        <div class="form-group">
-                        <label >Type:</label>
+                <!--quick info section -->
+                <div class="col-lg-3">
+                    <div class="alert alert-danger text-center">
+                        <i class="fa fa-gears fa-3x"></i>&nbsp;<b>20 </b>Rooms added
 
-
-                        <select name="roomtype" class="form-control" >
-                            <c:forEach  items="${roomtypes}" var="item" varStatus="stat" >
-                                <c:if test="${room.roomTypeId.id == item.id}" >
-                                    <option selected value="${item.id}">${item.description}- ${item.rate}</option>
-                                </c:if>
-                                <c:if test="${room.roomTypeId.id != item.id}">
-                                    <option value="${item.id}">${item.description}- ${item.rate}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
-                        </div>
-                        
-                        <input type="submit" value="Save"  class="btn btn-success"/>
-                    </form>
+                    </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="alert alert-success text-center">
+                        <i class="fa fa-gears fa-3x"></i>&nbsp;<b>27 % </b>Room Amenities  
+                    </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="alert alert-info text-center">
+                        <i class="fa fa-gears fa-3x"></i>&nbsp;<b>1,900</b> Room Types
 
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="alert alert-warning text-center">
+                        <i class="fa  fa-gears fa-3x"></i>&nbsp;<b>2,000 $ </b>Payment Dues For Rejected Items
+                    </div>
+                </div>
+                <!--end quick info section -->
+            </div>
         </div>
         <!-- end page-wrapper -->
 

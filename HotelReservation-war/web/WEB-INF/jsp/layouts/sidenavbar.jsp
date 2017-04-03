@@ -10,16 +10,17 @@
                         <img src="assets/img/user.jpg" alt="">
                     </div>
                     <div class="user-info">
-                        <div>Administrator</div>
-                        <div class="user-text-online">
+                        <div>${admininfo.displayName}</div>
+<!--                        <div class="user-text-online">
                             <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;Online
-                        </div>
+                        </div>-->
+                        &nbsp;
                     </div>
                 </div>
                 <!--end user image section-->
             </li>
-            <li class="sidebar-search">
-                <!-- search section-->
+<!--            <li class="sidebar-search">
+                 search section
                 <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
@@ -28,13 +29,24 @@
                         </button>
                     </span>
                 </div>
-                <!--end search section-->
-            </li>
+                end search section
+            </li>-->
             <li class="">
-                <a href="admin"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                <a href="${adminrootpath}/dashboard"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
             </li>
+            <!--<li class="">-->
+                <!--<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Basic Setup<span class="fa arrow"></span></a>-->
+                <!--<ul class="nav nav-second-level">-->
+                    <li>
+                        <a href="${adminrootpath}/roomtypes"><i class="fa fa-building-o fa-fw"></i>Room Type Setup</a>
+                    </li>
+                    <li>
+                        <a href="${adminrootpath}/services"><i class="fa fa-cogs fa-fw"></i>Room Amenities Setup</a>
+                    </li>
+                <!--</ul>-->
+            <!--</li>-->
             <li class="">
-                <a href="${adminrootpath}/rooms"><i class="fa fa-dashboard fa-fw"></i>Rooms</a>
+                <a href="${adminrootpath}/rooms"><i class="fa fa-bed fa-fw"></i>Rooms</a>
             </li> 
         </ul>
         <!-- end side-menu -->

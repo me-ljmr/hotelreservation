@@ -17,7 +17,7 @@ public interface AdminSessionBeanRemote {
      List findAll();
 
     Object find(int id);
-
+    Object find(String loginname);
     void delete(int id);
 
     void save(Object adminInfo);

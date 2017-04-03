@@ -5,6 +5,7 @@
  */
 package com.awesomegroup.controllers;
 
+import com.awesomegroup.entity.AdminInfo;
 import com.awesomegroup.entity.Room;
 import com.awesomegroup.entity.RoomType;
 import com.awesomegroup.sessionbean.RoomSessionBeanRemote;
@@ -24,7 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import sun.misc.BASE64Decoder;
 
 /**
@@ -69,6 +69,9 @@ public class RoomController {
     }
     @RequestMapping("admin/rooms")
     public String getRooms(Model model){
+        if (httpsession.getAttribute("whoisloggedinasadmin")==null){
+            return "redirect:login";
+        }
         List<Room> rooms=null;
         try{
             rooms= getRoomSessionRemote().getAll();
@@ -76,7 +79,7 @@ public class RoomController {
         }catch(Exception ex){
             model.addAttribute("error", ex.getMessage());
         }
-        
+        model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
         model.addAttribute("rooms",rooms); 
          //System.out.println(getRoomSessionRemote().getAll());
         return "admin/rooms";
@@ -84,7 +87,10 @@ public class RoomController {
     
     @RequestMapping(value="/admin/rooms/new", method=RequestMethod.GET)
     public String newRoom(Model model){
-        
+        if (httpsession.getAttribute("whoisloggedinasadmin")==null){
+            return "redirect:login";
+        }
+        model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
         model.addAttribute("roomtypes",getRoomTypeSessionRemote().getAll());
         model.addAttribute("roomtype",new RoomType());
          
@@ -92,10 +98,13 @@ public class RoomController {
     }
     @RequestMapping(value="/admin/rooms/edit/{id}", method=RequestMethod.GET)
     public String editRoom(Model model,@PathVariable("id") int id){
-        
+        if (httpsession.getAttribute("whoisloggedinasadmin")==null){
+            return "redirect:login";
+        }
         model.addAttribute("roomtypes",getRoomTypeSessionRemote().getAll());
         model.addAttribute("roomtype",new RoomType());
          model.addAttribute("room",getRoomSessionRemote().get(id));
+         model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
         return "admin/editroom";
     }
     public static byte[] Base64ToBytes(String imageString) throws IOException {
@@ -105,6 +114,9 @@ public class RoomController {
     }
     @RequestMapping(value="/admin/rooms/new" , method=RequestMethod.POST)
     public String saveRoom(Model model, HttpServletRequest request){
+        if (httpsession.getAttribute("whoisloggedinasadmin")==null){
+            return "redirect:login";
+        }
         String roomnumber = request.getParameter("roomnumber");
         int floor = Integer.parseInt(request.getParameter("floor"));
         RoomType roomtype =(RoomType) getRoomTypeSessionRemote().get(Integer.parseInt(request.getParameter("roomtype")));
@@ -113,34 +125,11 @@ public class RoomController {
         room.setRoomNumber(request.getParameter("roomnumber"));
         room.setFloor(floor);
         room.setRoomTypeId(roomtype);
-        
-    //        System.out.print(request.getParameter("picture"));
-//        if(request.getFileNames()!=null){
-//            Iterator<String> iterator = request.getFileNames();
-//             RoomPhotoGallery photo=null;
-//            while (iterator.hasNext()) {
-//                try {
-//                    String fileName = iterator.next();
-//                    MultipartFile multipartFile = request.getFile(fileName);
-//                    byte[] image = multipartFile.getBytes();
-//                    System.out.print(image);
-//                    photo = new RoomPhotoGallery();
-//                    photo.setPhoto(image);
-//                    photo.setPhotoTitle("Test Picture");
-//                    room.addAPicture(photo);
-//                    // do stuff...
-//                } catch (IOException ex) {
-//                    System.err.print(ex.getMessage());
-//                }
-//
-//            }
-//            room.addAPicture(photo);
-//        }
-        
-        
+  
         
         sessionBean = getRoomSessionRemote();
         sessionBean.save(room);
+        model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
         model.addAttribute("roomsaved", "Room with number " + roomnumber + " has been saved successfully.");
         model.addAttribute("rooms",getRoomSessionRemote().getAll());
         
