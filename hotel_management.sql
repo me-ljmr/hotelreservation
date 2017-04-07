@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 14, 2017 at 02:50 AM
+-- Generation Time: Apr 08, 2017 at 12:15 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -34,8 +34,11 @@ CREATE TABLE `admin_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `admin_info`:
+-- Dumping data for table `admin_info`
 --
+
+INSERT INTO `admin_info` (`id`, `login_name`, `login_password`, `display_name`) VALUES
+(1, 'admin', '$31$16$mK_xxdrh4qXhzKXiAeW3xSYnpCURUEZM6lE2YKXBJBE', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -46,14 +49,17 @@ CREATE TABLE `admin_info` (
 CREATE TABLE `hotel_info` (
   `id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL DEFAULT '',
+  `logo` mediumblob NOT NULL,
+  `contact_number` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `web_url` varchar(100) NOT NULL,
   `address` varchar(100) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `hotel_info`:
+-- Dumping data for table `hotel_info`
 --
-
--- --------------------------------------------------------
+ 
 
 --
 -- Table structure for table `photo_gallery`
@@ -62,17 +68,9 @@ CREATE TABLE `hotel_info` (
 CREATE TABLE `photo_gallery` (
   `id` int(11) NOT NULL,
   `hotel_id` int(11) DEFAULT NULL,
-  `photo_url` varchar(100) DEFAULT '',
+  `photo` blob,
   `photo_title` varchar(20) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `photo_gallery`:
---   `hotel_id`
---       `hotel_info` -> `id`
---   `hotel_id`
---       `hotel_info` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -87,20 +85,16 @@ CREATE TABLE `reservation` (
   `date_till` date DEFAULT NULL,
   `room_id` int(6) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `special_service` varchar(100) NOT NULL
+  `special_service` varchar(100) NOT NULL,
+  `status` char(2) NOT NULL DEFAULT 'BK' COMMENT 'holds BK booked, CC cancelled, CI checked in, CO checked out'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `reservation`:
---   `room_id`
---       `room` -> `id`
---   `user_id`
---       `user_info` -> `id`
---   `room_id`
---       `room` -> `id`
---   `user_id`
---       `user_info` -> `id`
+-- Dumping data for table `reservation`
 --
+
+INSERT INTO `reservation` (`id`, `booked_date`, `date_from`, `date_till`, `room_id`, `user_id`, `special_service`, `status`) VALUES
+(1, '2017-04-11 00:00:00', '2017-04-17', '2017-04-28', 34, 1, ' ', 'BK');
 
 -- --------------------------------------------------------
 
@@ -111,15 +105,18 @@ CREATE TABLE `reservation` (
 CREATE TABLE `room` (
   `id` int(11) NOT NULL,
   `floor` int(2) DEFAULT NULL,
-  `room_number` int(5) DEFAULT '0',
+  `room_number` varchar(10) DEFAULT '0',
   `room_type_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `room`:
---   `room_type_id`
---       `room_type` -> `id`
+-- Dumping data for table `room`
 --
+
+INSERT INTO `room` (`id`, `floor`, `room_number`, `room_type_id`) VALUES
+(34, 8, '805', 3),
+(35, 2, '204', 1),
+(36, 1233, '34', 5);
 
 -- --------------------------------------------------------
 
@@ -133,35 +130,18 @@ CREATE TABLE `room_calendar` (
   `promotion_percentage` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- RELATIONS FOR TABLE `room_calendar`:
---
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room_exception`
+-- Table structure for table `room_photo_gallery`
 --
 
-CREATE TABLE `room_exception` (
+CREATE TABLE `room_photo_gallery` (
   `id` int(11) NOT NULL,
-  `on_date` date DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `notes` varchar(100) DEFAULT NULL,
-  `room_id` int(11) NOT NULL
+  `room_id` int(11) DEFAULT NULL,
+  `photo` blob,
+  `photo_title` varchar(20) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONS FOR TABLE `room_exception`:
---   `room_id`
---       `room` -> `id`
---   `user_id`
---       `user_info` -> `id`
---   `user_id`
---       `user_info` -> `id`
---   `room_id`
---       `room` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -176,16 +156,31 @@ CREATE TABLE `room_service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `room_service`:
---   `room_id`
---       `room` -> `id`
---   `service_id`
---       `service` -> `id`
---   `room_id`
---       `room` -> `id`
---   `service_id`
---       `service` -> `id`
+-- Dumping data for table `room_service`
 --
+
+INSERT INTO `room_service` (`id`, `room_id`, `service_id`) VALUES
+(35, 34, 51),
+(36, 34, 71),
+(37, 34, 85),
+(38, 34, 70),
+(39, 34, 75),
+(40, 34, 68),
+(41, 34, 92),
+(42, 34, 94),
+(43, 34, 63),
+(44, 34, 83),
+(45, 35, 50),
+(46, 35, 51),
+(47, 36, 56),
+(48, 36, 83),
+(49, 36, 81),
+(50, 36, 66),
+(51, 36, 54),
+(52, 36, 80),
+(53, 36, 65),
+(54, 36, 57),
+(55, 36, 64);
 
 -- --------------------------------------------------------
 
@@ -195,13 +190,21 @@ CREATE TABLE `room_service` (
 
 CREATE TABLE `room_type` (
   `id` int(11) NOT NULL,
-  `description` varchar(100) DEFAULT '""',
-  `rate` decimal(3,2) DEFAULT '0.00'
+  `title` varchar(50) NOT NULL,
+  `description` text COMMENT 'Basic, Deluxe, Family of Four',
+  `rate` decimal(6,2) DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `room_type`:
+-- Dumping data for table `room_type`
 --
+
+INSERT INTO `room_type` (`id`, `title`, `description`, `rate`) VALUES
+(1, 'Deluxe 1 Bed A', 'Deluxe 1 Bed A', '149.99'),
+(3, 'Single Bed', 'One Bed', '129.99'),
+(5, 'Luxury Suite', 'Luxury Suite 3 Bedroom with Jacuzzi ', '800.00'),
+(6, 'Double Bed Delux', 'Double Bed Delux type BA', '199.00'),
+(7, 'Deluxe 1 Bed', 'Deluxe 1 Bed As dfadsfadsfas', '149.99');
 
 -- --------------------------------------------------------
 
@@ -216,8 +219,54 @@ CREATE TABLE `service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `service`:
+-- Dumping data for table `service`
 --
+
+INSERT INTO `service` (`id`, `title`, `description`) VALUES
+(50, '250 Thread Count Sheets', ' '),
+(51, 'Air Conditioning', ' '),
+(52, 'Arm Chair with Ottoman', ' '),
+(54, 'Clock Radio w/ MP3 Connection', ' '),
+(55, 'Curved Shower Rod', ' '),
+(56, 'Duvet Covers', ' '),
+(57, 'Ergonomic Mirra Desk Chair', ' '),
+(58, 'Feather Pillows Non Allergenic', ' '),
+(59, 'Granite Counter Tops/Vanities', ' '),
+(60, 'Lever Door Handles', ' '),
+(62, 'On-Demand Video Games', ' '),
+(63, 'TV-Cable', ' '),
+(64, 'TV-Premium HBO,CNN,ESPN', ' '),
+(65, 'TV-Standard Network', ' '),
+(66, 'Thermostat (adjustable)', ' '),
+(67, 'Work Desk with Adjustable Lamp', ' '),
+(68, 'Alarms - Audible', ' '),
+(69, 'Automatic Door Closer', ' '),
+(70, 'Double Locking Doors', ' '),
+(71, 'Electronic Smoke Detector', ' '),
+(73, 'Scald Proof Shower/Tub', ' '),
+(74, 'Wide Angle Door Viewer', ' '),
+(75, 'Bathroom Amenities', ' '),
+(76, 'Coffee Maker', ' '),
+(77, 'Complimentary Remote Printing', ' '),
+(78, 'Convenient Electrical Outlets', ' '),
+(79, 'Desk Level Electric Plugs', ' '),
+(80, 'Desk Level HSIA Connection', ' '),
+(81, 'Desk Level Phone Jacks', ' '),
+(82, 'Evening Room Service Available', ' '),
+(83, 'Hairdryer', ' '),
+(84, 'High Speed Internet-No Charge', ' '),
+(85, 'Iron', ' '),
+(86, 'Iron/Ironing Board', ' '),
+(87, 'Microwave', ' '),
+(88, 'Mini Refrigerator', ' '),
+(89, 'Neutrogena(R) Bath Amenities', ' '),
+(90, 'Newspaper M-F (USA Today)', ' '),
+(91, 'Self Laundry Available', ' '),
+(92, 'Telephone - Auto Wakeup', ' '),
+(93, 'Two Phones with Dataport', ' '),
+(94, 'Two Phones with Speaker', ' '),
+(95, 'Two Phones with Voicemail', ' '),
+(96, 'Baby Crib', 'A small crib for a baby');
 
 -- --------------------------------------------------------
 
@@ -237,8 +286,11 @@ CREATE TABLE `user_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELATIONS FOR TABLE `user_info`:
+-- Dumping data for table `user_info`
 --
+
+INSERT INTO `user_info` (`id`, `first_name`, `last_name`, `user_address`, `contact_number`, `date_of_birth`, `email`, `password`) VALUES
+(1, 'Nuga', 'Manandhar', 'kipling and finch', '6477097705', '2016-12-19', 'nuga@gmail.com', '$31$16$mK_xxdrh4qXhzKXiAeW3xSYnpCURUEZM6lE2YKXBJBE');
 
 --
 -- Indexes for dumped tables
@@ -276,7 +328,7 @@ ALTER TABLE `reservation`
 --
 ALTER TABLE `room`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_room_room_type_id` (`room_type_id`);
+  ADD KEY `room_type_id` (`room_type_id`);
 
 --
 -- Indexes for table `room_calendar`
@@ -285,11 +337,10 @@ ALTER TABLE `room_calendar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `room_exception`
+-- Indexes for table `room_photo_gallery`
 --
-ALTER TABLE `room_exception`
+ALTER TABLE `room_photo_gallery`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
   ADD KEY `room_id` (`room_id`);
 
 --
@@ -326,12 +377,12 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT for table `admin_info`
 --
 ALTER TABLE `admin_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `hotel_info`
 --
 ALTER TABLE `hotel_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `photo_gallery`
 --
@@ -341,44 +392,42 @@ ALTER TABLE `photo_gallery`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `reservation` ADD STATUS CHAR(2);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `room_calendar`
 --
 ALTER TABLE `room_calendar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `room_exception`
+-- AUTO_INCREMENT for table `room_photo_gallery`
 --
-ALTER TABLE `room_exception`
+ALTER TABLE `room_photo_gallery`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `room_service`
 --
 ALTER TABLE `room_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `room_type`
 --
 ALTER TABLE `room_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -397,11 +446,16 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`);
 
 --
--- Constraints for table `room_exception`
+-- Constraints for table `room`
 --
-ALTER TABLE `room_exception`
-  ADD CONSTRAINT `room_exception_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-  ADD CONSTRAINT `room_exception_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
+ALTER TABLE `room`
+  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`room_type_id`) REFERENCES `room_type` (`id`);
+
+--
+-- Constraints for table `room_photo_gallery`
+--
+ALTER TABLE `room_photo_gallery`
+  ADD CONSTRAINT `room_photo_gallery_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
 
 --
 -- Constraints for table `room_service`
@@ -409,54 +463,6 @@ ALTER TABLE `room_exception`
 ALTER TABLE `room_service`
   ADD CONSTRAINT `room_service_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
   ADD CONSTRAINT `room_service_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
-
-
-ALTER TABLE `room` ADD FOREIGN KEY (`room_type_id`) REFERENCES `hotel_management`.`room_type`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE `photo_gallery` CHANGE `photo_url` `photo` BLOB NULL DEFAULT '';
-
-ALTER TABLE `hotel_info` ADD `logo` MEDIUMBLOB NOT NULL AFTER `title`, ADD `contact_number` VARCHAR(100) NOT NULL AFTER `logo`, ADD `email` VARCHAR(100) NOT NULL AFTER `contact_number`, ADD `web_url` VARCHAR(100) NOT NULL AFTER `email`;
-
-
-/* SAMPLE RECORDS */
-
-CREATE TABLE `room_photo_gallery` (
-  `id` int(11) NOT NULL,
-  `room_id` int(11) DEFAULT NULL,
-  `photo` blob,
-  `photo_title` varchar(20) DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `photo_gallery`
---
-ALTER TABLE `room_photo_gallery`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `room_id` (`room_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `photo_gallery`
---
-ALTER TABLE `room_photo_gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `photo_gallery`
---
-ALTER TABLE `room_photo_gallery`
-  ADD CONSTRAINT `room_photo_gallery_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);	
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -102,8 +102,10 @@ public class AdminLoginController {
                 return "admin/login";
         }
         try{
+             Object obj = getAdminSessionBeanRemote().find(username);
+             if(obj==null)
             AdminInfo admin= (AdminInfo)getAdminSessionBeanRemote().find(username);
-            System.out.print(admin);
+            
             if(admin==null)
             {
                  if(errors==null)errors = new ArrayList<>();
