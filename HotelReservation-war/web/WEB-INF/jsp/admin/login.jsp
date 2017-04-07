@@ -15,34 +15,15 @@
     <title>Hotel Awesome</title>
     <!-- Core CSS - Include with every page -->
     
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.css" var="bootstrapcss" />
-    <spring:url value="/assets/font-awesome/css/font-awesome.css" var="fontawesomecss" />
-    <spring:url value="/assets/plugins/pace/pace-theme-big-counter.css" var="themebigcss" />
-    <spring:url value="/assets/css/style.css" var="stylecss" />
-    <spring:url value="/assets/css/main-style.css" var="mainstylecss" />
-    <spring:url value="/assets/img/logo.png" var="logo" />
-    <spring:url value="/assets/plugins/uploader/uploadfile.css" var="uploadfilecss" />
 
-      
-    <spring:url value="/assets/plugins/jquery-1.10.2.js" var ="jqueryjs" />
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.min.js" var="bootstrapjs" />
-    <spring:url value="/assets/plugins/metisMenu/jquery.metisMenu.js" var="jquerymetismenujs" />
-    <spring:url value="/assets/plugins/pace/pace.js" var="pacejs" />
-    <spring:url value="/assets/scripts/siminta.js" var = "simintajs" />
-    <spring:url value="/assets/scripts/viewcard.js" var = "viewcardjs" />
-    <spring:url value="/assets/plugins/uploader/jquery.uploadfile.js" var="jqueryuploadfilejs" />
-    
-    <!-- Core CSS - Include with every page -->
-    <link href="${bootstrapcss}" rel="stylesheet" />
-    <link href="${fontawesomecss}" rel="stylesheet" />
-    <link href="${themebigcss}" rel="stylesheet" />
-    <link href="${stylecss}" rel="stylesheet" />
-    <link href="${mainstylecss}" rel="stylesheet" />
-    <link href="${uploadfilecss}" rel="stylesheet" />
 
  
     <spring:url value="/hotelsys/admin" var="adminrootpath" /> 
     
+      <%@include file="../layouts/springvars.jsp" %>
+    <%@include file="../layouts/csslinks.jsp" %>
+
+
    </head>
 <body class="body-Login-back">
 
@@ -81,7 +62,7 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" ${remember} type="checkbox" value="Remember Me">Remember Me
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->

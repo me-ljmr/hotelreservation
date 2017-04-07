@@ -21,4 +21,6 @@ public interface ServiceSessionBeanRemote {
     void delete(int id);
 
     void save(Object service);
+    
+    List getServicesAsCollection(int[] serviceIdLists);
 }

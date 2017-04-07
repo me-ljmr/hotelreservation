@@ -15,6 +15,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByFloor", query = "SELECT r FROM Room r WHERE r.floor = :floor"),
-    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber")})
+    @NamedQuery(name = "Room.findByRoomType", query = "SELECT r FROM Room r WHERE r.roomTypeId.id = :roomTypeId"),
+    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber"),
+    @NamedQuery(name = "Room.findByServiceId", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id = :serviceId"),
+        @NamedQuery(name = "Room.findByServices", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id in :services")
+})
+
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,7 +58,7 @@ public class Room implements Serializable {
     @Size(max = 10)
     @Column(name = "room_number")
     private String roomNumber;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId", fetch = FetchType.EAGER)
     private Collection<RoomService> roomServiceCollection;
     @OneToMany(mappedBy = "roomId")
     private Collection<Reservation> reservationCollection;

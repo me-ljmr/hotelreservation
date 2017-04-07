@@ -22,4 +22,6 @@ public interface ServiceSessionBeanLocal {
     void delete(int id);
 
     void save(Service service);
+    
+    List getServicesAsCollection(int[] serviceIdLists);
 }

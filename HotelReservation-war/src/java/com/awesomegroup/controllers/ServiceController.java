@@ -58,13 +58,13 @@ public class ServiceController {
         if (httpsession.getAttribute("whoisloggedinasadmin")==null){
             return "redirect:login";
         }
-        List<String> errors = null; 
+        List<String> errors = new ArrayList<>(); 
         List<Service> services=null;
         try{
             services= getServiceSessionRemote().getAll();
             
         }catch(Exception ex){
-            if (errors==null) errors = new ArrayList<>();
+            
             errors.add(ex.getMessage());
         }
         model.addAttribute("errors", errors);
@@ -81,15 +81,15 @@ public class ServiceController {
         if (httpsession.getAttribute("whoisloggedinasadmin")==null){
             return "redirect:login";
         }
-        List<String> errors = null;
-        List<String> messages = null;
+        List<String> errors = new ArrayList<>(); 
+        List<String> messages = new ArrayList<>();
         String title,desc;
         if(request.getParameter("mode").equals("save")){
             // new or edit
             title = request.getParameter("title");
             desc = request.getParameter("description");
             if(emptyCheck(request.getParameter("title"))){
-                if (errors==null) errors = new ArrayList<>();
+                 
                 errors.add("Title cannot be empty");
             }
             if(errors==null)
@@ -109,7 +109,7 @@ public class ServiceController {
                 service.setTitle(request.getParameter("title"));
                 service.setDescription(request.getParameter("description"));
                 getServiceSessionRemote().save(service);
-                if(messages==null) messages = new ArrayList<>();
+                 
                 messages.add("Data Saved Successfully");
             }else{
                 model.addAttribute("title",title);
@@ -119,10 +119,10 @@ public class ServiceController {
             // delete
             if (!emptyCheck(request.getParameter("serviceid"))){
                 getServiceSessionRemote().delete(Integer.parseInt(request.getParameter("serviceid")));
-                if(messages==null) messages = new ArrayList<>();
+                 
                 messages.add("Data deleted successfully");
             }else{
-                if(errors==null) errors = new ArrayList<>();
+                 
                 errors.add("Invalid service identification number");
             }
         }
@@ -132,9 +132,11 @@ public class ServiceController {
             services= getServiceSessionRemote().getAll();
              
         }catch(Exception ex){
-            if(errors ==null) errors = new ArrayList<>();
+             
             errors.add(ex.getMessage());
         }
+        if (errors.isEmpty()) errors = null;
+        if(messages.isEmpty()) messages =null;
         model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
         model.addAttribute("messages",messages);
         model.addAttribute("errors", errors);

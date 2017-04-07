@@ -41,8 +41,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reservation.findByBookedDate", query = "SELECT r FROM Reservation r WHERE r.bookedDate = :bookedDate"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
+    
+     
     @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService"),
-    @NamedQuery(name = "Reservation.findByStatus", query = "SELECT r FROM Reservation r WHERE r.status = :status")})
+    @NamedQuery(name = "Reservation.findByStatus", query = "SELECT r FROM Reservation r WHERE r.status = :status"),
+    @NamedQuery(name = "Reservation.findReservations", query = "SELECT r FROM Reservation r"
+            + " WHERE (r.roomId.roomTypeId.rate between :priceFrom and :priceTo  "
+            + " and r.roomId.floor = (case when :floor=-1 then r.roomId.floor else :floor end))"
+            + " or ((r.dateFrom between :from and :to) or (r.dateTill between :from and :to)) "
+            //+ "  or (:from between r.dateFrom and r.dateTill) "
+            //+ " or (:to between r.dateFrom and r.dateTill))"
+            )
+        
+
+
+//+ " and (r.roomId.roomTypeId.rate between (case when :priceFrom=-1 then 0 else :priceFrom end) and (case when :priceTo=-1 then 999999 else :priceTo end)) and (r.roomId.floor = (case when :floor=-1 then r.roomId.floor else :floor end))")
+})
+
 public class Reservation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -16,28 +16,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modify Room Information</title>
-    <!-- Core CSS - Include with every page -->
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.css" var="bootstrapcss" />
-    <spring:url value="/assets/font-awesome/css/font-awesome.css" var="fontawesomecss" />
-    <spring:url value="/assets/plugins/pace/pace-theme-big-counter.css" var="themebigcss" />
-    <spring:url value="/assets/css/style.css" var="stylecss" />
-    <spring:url value="/assets/css/main-style.css" var="mainstylecss" />
-    <spring:url value="/assets/plugins/uploader/uploadfile.css" var="uploadfilecss" />
-      <spring:url value="/assets/img/logo.png" var="logo" />
-          <spring:url value="/assets/plugins/jquery-1.10.2.js" var ="jqueryjs" />
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.min.js" var="bootstrapjs" />
-    <spring:url value="/assets/plugins/metisMenu/jquery.metisMenu.js" var="jquerymetismenujs" />
-    <spring:url value="/assets/plugins/pace/pace.js" var="pacejs" />
-    <spring:url value="/assets/scripts/siminta.js" var = "simintajs" />
-    <spring:url value="/assets/plugins/uploader/jquery.uploadfile.js" var="jqueryuploadfilejs" />
-    
-    <link href="${bootstrapcss}" rel="stylesheet" />
-    <link href="${fontawesomecss}" rel="stylesheet" />
-    <link href="${themebigcss}" rel="stylesheet" />
-    <link href="${stylecss}" rel="stylesheet" />
-    <link href="${mainstylecss}" rel="stylesheet" />
- <link href="${uploadfilecss}" rel="stylesheet" />
-    <spring:url value="/hotelsys/admin" var="adminrootpath" />    
+    <!-- Core CSS - Include with every page --> 
+    <spring:url value="/hotelsys/admin" var="adminrootpath" />  
+     <%@include file="../layouts/springvars.jsp" %>
+    <%@include file="../layouts/csslinks.jsp" %>
 </head>
 
 <body>
@@ -65,7 +47,7 @@
                 <div class="col-md-6">
                 
                
-                    <form class="form-horizontal"  action="${adminrootpath}/rooms/new" method="post">
+                    <form id="editform" class="form-horizontal"  action="${adminrootpath}/rooms/edit/${room.id}" method="post">
                         <div class="form-group">
                         <label >Room Number:</label><input type="text" name="roomnumber" value="${room.roomNumber}" class="form-control"/> 
                         </div>
@@ -87,8 +69,45 @@
                             </c:forEach>
                         </select>
                         </div>
-                        
-                        <input type="submit" value="Save"  class="btn btn-success"/>
+                        <div class="row" >
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Room Amenities:</label><span>(Select atleast one)</span>
+                                 <div class="well" style="max-height: 300px;overflow: auto;">
+                                    <ul class="list-group checked-list-box">
+                                        <c:forEach  items="${services}" var="item" varStatus="stat">
+                                            <c:set var="contains" value="false" />
+                                            
+                                            <c:forEach items="${room.roomServiceCollection}" var="srv" >
+                                                
+                                                <c:if test="${item.id eq srv.serviceId.id}">
+                                                     
+                                                    <c:set var="contains" value="true" />
+                                                </c:if>
+                                                 
+                                                     
+                                            </c:forEach>
+                                            
+                                            <li class="list-group-item" data-checked="${contains}" data-value="${item.id}">
+                                                 
+                                                ${item.id}&nbsp;-&nbsp; ${item.title}
+
+                                            </li>
+<!--                                       
+                                       -->
+                                        </c:forEach>
+                                    </ul>
+                                 </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkedServices" id="checkedServices">
+                            
+                        </div> 
+                        <!--<input  type="submit" value="Save"  class="btn btn-success"/>-->
+                        <button id="savethisformbutton" class="btn btn-success">Save
+                        </button>
+                       
                     </form>
                 </div>
                 </div>
@@ -100,12 +119,34 @@
     <!-- end wrapper -->
 
     <!-- Core Scripts - Include with every page -->
-    <script src="${jqueryjs}"></script>
-    <script src="${bootstrapjs}"></script>
-    <script src="${jquerymetismenujs}"></script>
-    <script src="${pacejs}"></script>
-    <script src="${simintajs}"></script>
-    <script src="${jqueryuploadfilejs}"></script>
+ <%@include file="../layouts/scriptlinks.jsp" %>
+     <script>
+            $('#savethisformbutton').on('click', function(event) {
+                event.preventDefault(); 
+                 var checkedServicesDiv =  document.getElementById("checkedServices");
+                  
+                    while (checkedServicesDiv.firstChild) {
+                        console.log(checkedServicesDiv.firstChild)
+                        checkedServicesDiv.removeChild(checkedServicesDiv.firstChild);
+                    }
+                 
+                var checkedItems = {}, counter = 0;
+                $(".checked-list-box li.active").each(function(idx, li) {
+                    checkedItems[counter] = $(li).attr("data-value");
+                    var selServices = document.createElement("input");
+                    selServices.setAttribute("name","services");
+                    selServices.setAttribute("class","nuga");
+                    selServices.setAttribute("type","hidden");
+                    selServices.setAttribute("value",checkedItems[counter]);
+                    checkedServicesDiv.appendChild(selServices);
+                    counter++;
+                });
+                $("#editform").submit();
+                
+            });
+
+    </script>
+    
 </body>
 
 </html>

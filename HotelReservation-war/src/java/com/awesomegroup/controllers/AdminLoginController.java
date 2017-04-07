@@ -55,8 +55,15 @@ public class AdminLoginController {
     
     @RequestMapping(value="admin/login", method=RequestMethod.GET)
     public String showlogin(Model model){
-        
-        
+        model.addAttribute("remember","");
+        if(httpsession.getAttribute("remember")!=null ){
+            model.addAttribute("remember","checked");
+             
+            model.addAttribute("login", httpsession.getAttribute("rememberuser"));
+            model.addAttribute("password", httpsession.getAttribute("rememberpassword"));
+             
+        }
+         
         return "admin/login";
     }
     @RequestMapping(value="admin/logout")
@@ -69,31 +76,66 @@ public class AdminLoginController {
     public String logmein(Model model, HttpServletRequest request){
         List<String> errors = null;
         PasswordAuthentication pauth = new PasswordAuthentication();
+        
         String username=request.getParameter("login");
         String password = request.getParameter("password");
-        
+        String remember  = request.getParameter("remember");
+         
+        if(remember!=null){
+            httpsession.setAttribute("remember", "checked");
+            httpsession.setAttribute("rememberuser", username);
+            httpsession.setAttribute("rememberpassword", password);
+            
+            
+        }else{
+            httpsession.removeAttribute("remember");
+            httpsession.removeAttribute("rememberuser");
+            httpsession.removeAttribute("rememberpassword");
+        }
+         
+        if( "".equals(username) || "".equals(password)){
+             if(errors==null)errors = new ArrayList<>();
+            errors.add("Login name or password cannot be empty");
+            model.addAttribute("errors", errors);
+            model.addAttribute("login",username);
+            model.addAttribute("password",password);
+                return "admin/login";
+        }
         try{
             AdminInfo admin= (AdminInfo)getAdminSessionBeanRemote().find(username);
-            
-            
-            if(pauth.authenticate(password, admin.getLoginPassword())){
-                pauth=null;
-                httpsession.setAttribute("whoisloggedinasadmin", admin);
-                return "redirect:dashboard";
-            }else{
-                pauth=null;
-                if(errors==null)errors = new ArrayList<>();
-                errors.add("Login name and password doesn't match");
-                model.addAttribute("login",username);
-                model.addAttribute("password",password);
-                
+            System.out.print(admin);
+            if(admin==null)
+            {
+                 if(errors==null)errors = new ArrayList<>();
+                errors.add("Not able to connect to session bean");
                 model.addAttribute("errors", errors);
                 return "admin/login";
             }
-        }catch(Exception ex){
+            else{
+                if(pauth.authenticate(password, admin.getLoginPassword())){
+                    pauth=null;
+                    httpsession.setAttribute("whoisloggedinasadmin", admin);
+                    return "redirect:dashboard";
+                }else{
+                    pauth=null;
+                    if(errors==null)errors = new ArrayList<>();
+                    errors.add("Login name and password doesn't match");
+                    
+                    model.addAttribute("login",username);
+                    model.addAttribute("password",password);
+
+                    model.addAttribute("errors", errors);
+                    return "admin/login";
+                }
+            }
+        } 
+        catch(Exception ex){
             pauth = null;
             if(errors==null)errors = new ArrayList<>();
-            errors.add(ex.getLocalizedMessage());
+            if(!ex.getMessage().trim().equals(""))
+            errors.add(ex.getMessage());
+            else
+                errors.add("Error while trying to connect");
             model.addAttribute("errors", errors);
             return "admin/login";
         }

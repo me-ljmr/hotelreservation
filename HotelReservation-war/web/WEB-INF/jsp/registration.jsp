@@ -1,82 +1,105 @@
-
 <%-- 
-    Document   : registration
-    Created on : 28-Mar-2017, 1:04:01 AM
-    Author     : Aishwarya
+    Document   : room
+    Created on : Mar 26, 2017, 3:04:40 PM
+    Author     : lujamanandhar
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.awesomegroup.entity.RoomType"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapcss" />
+        <title>User Editor</title>
+        <spring:url value="/hotelsys/user" var="userrootpath" />       
+       <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapcss" />
         <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
         <spring:url value="/resources/js/jquery.js" var="jquery"/> 
-        <spring:url value="/hotelsys/admin" var="adminrootpath" />    
+        
         <script src="${bootstrapjs}"></script> 
         <script src="${jquery}"></script>  
         <link href="${bootstrapcss}" rel="stylesheet" /> 
-         
-        <title>Registration</title>
+        
     </head>
     <body>
         <div class="container">
-            <h2>Registration form</h2>
-            <a href="${userrootpath}/user/new" class="pull-right " >New user</a>
             <div class="row">
-                <c:if test="${usersaved != null}">
-                    <label class="alert alert-dismissable alert-success">${usersaved}</label>
-                </c:if>
+                <div class="col-md-3">
+                <h2>User Information</h1>
+               
+                <form   action="${userrootpath}/new/save" method="post">
+                    <div class="form-group" >
+                    <label>First name</label>
+                        
+                     <input type="text" path="firstName" name="firstName" class="form-control"/> 
+                        <c:if test = "${errorTest2!= null}">
+                            
+                            <label class="alert alert-danger"><h4>${errorTest2}</h4></label>
+                           
+                        </c:if> 
+                        <c:if test = "${errorTest!= null}">
+                            
+                            <label class="alert alert-danger"><h4>${errorTest}</h4></label>
+                           
+                        </c:if>     
+                            
+                    </div>
+                     <div class="form-group" >
+                    <label>Last name</label>
+                        
+                     <input type="text" path="lastName" name="lastName" class="form-control"/>
+                        <c:if test = "${errorTest2!= null}">
+                            
+                            <label class="alert alert-danger"><h4>${errorTest2}</h4></label>
+                           
+                        </c:if>
+                        
+                     
+                     </div>
+                    <div class="form-group" >
+                        <label>Address</label>
+                        
+                         <input type="text" path="address" name="address" class="form-control"/>
+                        
+                         
+                    </div>
+                    <div class="form-group" >
+                    <label>Date of birth</label>
+                        
+                    <input type="date" path="dob" name="dob" class="form-control" placeholder="yyyy-mm-dd"/> 
+                    </div>
+                    <div class="form-group" >
+                    <label>Contact number</label>
+                        
+                    <input type="text" path="contactNumber" name="contactNumber" class="form-control"/>
+                        <c:if test = "${errorTest3!= null}">
+                            
+                            <label class="alert alert-danger"><h4>${errorTest3}</h4></label>
+                           
+                        </c:if>
+                         
+                     
+                    </div>
+                    <div class="form-group" >
+                    <label>Email address</label>
+                        
+                     <input type="text" path="email" name="email" class="form-control"/>
+                        
+                  
+                    </div>
+                    <div class="form-group" >
+                    <label>Password</label>
+                        
+                    <input type="password" path="password" name="password" class="form-control"/>
+                        
+                    </div>
+                    <input type="submit" value="Save"  class="btn btn-success"/>
+                </form>
+                </div>
+                </div>
             </div>
-            
-            <div class="row">
-                <form:form  method="POST"  action="${userrootpath}/rooms/new">
-
-                <table class="table">
-                    
-                    <tr>
-                        <td>First name</td>
-                        <td><form:input type="text" path="firstName" name="firstName" /></td>
-
-                    </tr> 
-                    <tr> 
-                        <td>Last name</td>
-                        <td><form:input type="text" path="lastName" name="lastName" /></td>
-
-                    </tr> 
-                    <tr> 
-                        <td>Address</td>
-                        <td><form:input type="text" path="address" name="address" /></td>
-                    </tr>     
-                    <tr>     
-                        <td>Date of birth</td>
-                        <td><form:input type="date" path="dateOfBirth" name="dateOfBirth" /></td>
-                    </tr> 
-                    <tr> 
-                        <td>Contact number</td>
-                        <td><form:input type="text" path="contactNumber" name="contactNumber" /></td>
-                    </tr>
-                    <tr> 
-                        <td>Email address</td>
-                        <td><form:input type="text" path="email" name="email" /></td>
-                    </tr>
-                    <tr> 
-                        <td>Password</td>
-                        <td><form:input type="password" path="password" name="password" /></td>
-                    </tr>
-                    
-                    <input type="submit" value="Save"  />
-                    <c:if test = "${error != null}">
-                        <label class="alert alert-danger">${error}</label>
-                    </c:if>
-                    
-                </table>
-                </form:form>
-            </div>
-        </div>
     </body>
 </html>

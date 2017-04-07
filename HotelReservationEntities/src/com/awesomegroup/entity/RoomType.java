@@ -53,7 +53,7 @@ public class RoomType implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "rate")
     private BigDecimal rate;
-    @OneToMany(mappedBy = "roomTypeId",fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "roomTypeId" ,fetch = FetchType.EAGER)
     private Collection<Room> roomCollection;
 
     public RoomType() {
@@ -120,6 +120,10 @@ public class RoomType implements Serializable {
     @Override
     public String toString() {
         return "com.awesomegroup.RoomType[ id=" + id + " ]";
+    }
+
+    public void setRate(double rate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

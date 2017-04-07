@@ -20,28 +20,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms Admin</title>
     <!-- Core CSS - Include with every page -->
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.css" var="bootstrapcss" />
-    <spring:url value="/assets/font-awesome/css/font-awesome.css" var="fontawesomecss" />
-    <spring:url value="/assets/plugins/pace/pace-theme-big-counter.css" var="themebigcss" />
-    <spring:url value="/assets/css/style.css" var="stylecss" />
-    <spring:url value="/assets/css/main-style.css" var="mainstylecss" />
-    <spring:url value="/assets/img/logo.png" var="logo" />
-      
     
-        <spring:url value="/assets/plugins/jquery-1.10.2.js" var ="jqueryjs" />
-    <spring:url value="/assets/plugins/bootstrap/bootstrap.min.js" var="bootstrapjs" />
-    <spring:url value="/assets/plugins/metisMenu/jquery.metisMenu.js" var="jquerymetismenujs" />
-    <spring:url value="/assets/plugins/pace/pace.js" var="pacejs" />
-    <spring:url value="/assets/scripts/siminta.js" var = "simintajs" />
-    
-    
-    <link href="${bootstrapcss}" rel="stylesheet" />
-    <link href="${fontawesomecss}" rel="stylesheet" />
-    <link href="${themebigcss}" rel="stylesheet" />
-    <link href="${stylecss}" rel="stylesheet" />
-    <link href="${mainstylecss}" rel="stylesheet" />
     
       <spring:url value="/hotelsys/admin" var="adminrootpath" />    
+ <%@include file="../layouts/springvars.jsp" %>
+    <%@include file="../layouts/csslinks.jsp" %>
+
 
 </head>
 
@@ -75,14 +59,14 @@
                     </c:if>
                 </div>
                 <div class="row">
-                    <table class="table">
+                    <table class="table table-bordered">
 
                         <tr>
                             <th>Room ID</th>
                             <th>Room Number</th>
                             <th>Floor Number</th>
 
-                            <th>Type</th>
+                            <th style="width: 400px;">Type</th>
                             <th>Action</th>
                         </tr>
 
@@ -110,7 +94,16 @@
                                 <td>${room.roomNumber}</td>
                                 <td>${room.floor}</td>
 
-                                <td>${room.roomTypeId.description} - $${room.roomTypeId.rate}</td>
+                                <td>
+                                    <div>${room.roomTypeId.description} - $${room.roomTypeId.rate}</div>
+                                    <div>
+                                        <c:forEach var="service" items="${room.roomServiceCollection}">
+                                            <label class="label label-info">${service.serviceId.id} - ${service.serviceId.title}</label>
+                                            
+                                        </c:forEach>
+                                        
+                                    </div>
+                                </td>
                                 <td><a href="${adminrootpath}/rooms/edit/${room.id}" class="btn btn-primary">Edit</a></td>
                             </tr>
                         </c:forEach>
@@ -125,11 +118,7 @@
     <!-- end wrapper -->
 
     <!-- Core Scripts - Include with every page -->
-    <script src="${jqueryjs}"></script>
-    <script src="${bootstrapjs}"></script>
-    <script src="${jquerymetismenujs}"></script>
-    <script src="${pacejs}"></script>
-    <script src="${simintajs}"></script>
+    <%@include file="../layouts/scriptlinks.jsp" %>
 
 </body>
 

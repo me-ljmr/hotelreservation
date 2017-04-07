@@ -5,6 +5,7 @@
  */
 package com.awesomegroup.sessionbean;
 
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -24,5 +25,11 @@ public interface RoomSessionBeanRemote {
     
     List getRoomsByFloorNumber(int floor);
     
+    List getRoomsByRoomType(int roomTypeId);
+    
     Object getDetail(String roomNumber);
+    
+    List getRoomsByServiceId(int serviceId);
+    
+    List getRoomsByServices(Collection<Object> services);
 }

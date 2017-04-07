@@ -6,6 +6,7 @@
 package com.awesomegroup.sessionbean;
 
 import com.awesomegroup.entity.Reservation;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -23,4 +24,6 @@ public interface ReservationSessionBeanLocal {
     void delete(int id);
 
     void save(Reservation reservation);
+    
+    List findReservations(Date from, Date to, int minimumPrice, int maximumPrice,int floor);
 }

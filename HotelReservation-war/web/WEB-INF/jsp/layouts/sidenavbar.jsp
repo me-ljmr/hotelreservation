@@ -7,10 +7,10 @@
                 <!-- user image section-->
                 <div class="user-section">
                     <div class="user-section-inner">
-                        <img src="assets/img/user.jpg" alt="">
+                        <img src="${assetsfolder}/img/user.jpg" alt="">
                     </div>
                     <div class="user-info">
-                        <div>${admininfo.displayName}</div>
+                        <div>${admininfo.loginName}</div>
 <!--                        <div class="user-text-online">
                             <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;Online
                         </div>-->
@@ -44,10 +44,23 @@
                         <a href="${adminrootpath}/services"><i class="fa fa-cogs fa-fw"></i>Room Amenities Setup</a>
                     </li>
                 <!--</ul>-->
-            <!--</li>-->
+            <!--</li>--> 
             <li class="">
-                <a href="${adminrootpath}/rooms"><i class="fa fa-bed fa-fw"></i>Rooms</a>
+                <a href="${adminrootpath}/rooms"><i class="fa fa-cogs fa-fw"></i>Rooms</a>
             </li> 
+            <li class="">
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Admin Reports <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="${adminrootpath}/reports/roomsbyservice"><i class="fa fa-cogs fa-fw"></i>Rooms-by-service Report</a>
+                    </li>
+                    <li>
+                        <a href="${adminrootpath}/reports/reservationdetail"><i class="fa fa-cogs fa-fw"></i>Reservation Details Report</a>
+                    </li>
+                    
+                </ul>
+            </li>
+         
         </ul>
         <!-- end side-menu -->
     </div>

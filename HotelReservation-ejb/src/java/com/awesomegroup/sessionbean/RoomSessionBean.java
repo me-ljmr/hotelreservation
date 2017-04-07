@@ -6,6 +6,8 @@
 package com.awesomegroup.sessionbean;
 
 import com.awesomegroup.entity.Room;
+import com.awesomegroup.entity.Service;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -37,11 +39,42 @@ public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLo
     }
     
     @Override
+    public List getRoomsByRoomType(int roomTypeId){
+        return em.createNamedQuery("Room.findByRoomType",Room.class)
+                .setParameter("roomTypeId", roomTypeId)
+                .getResultList();
+    }
+    @Override
+    public List getRoomsByServiceId(int serviceId){
+         
+         
+        return em.createNamedQuery("Room.findByServiceId",Room.class)
+                .setParameter("serviceId", serviceId)
+                .getResultList();
+    }
+    
+    @Override 
+    public List getRoomsByServices(Collection<Object> services){
+        int[] arr  = new int[services.size()];
+        int x=0;
+        for(Object s :services){
+            arr[x] = ((Service)s).getId();
+            x++;
+        }
+        return em.createNamedQuery("Room.findByServices",Room.class)
+                .setParameter("services", arr)
+                .getResultList();
+          
+    } 
+    
+    @Override
     public List getAll() {
          
           
         return em.createNamedQuery("Room.findAll",Room.class).getResultList();
+        
     }
+    
     
     @Override
     public void delete(int id) {

@@ -6,6 +6,7 @@
 package com.awesomegroup.sessionbean;
 
 import com.awesomegroup.entity.Reservation;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,8 +14,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import sessionbean.ReservationSessionBeanRemote;
+ 
 
 /**
  *
@@ -29,15 +29,22 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote, Res
     private EntityManager em;
 
     @Override
-    public List findAll() {
-        Query query = em.createNamedQuery("Reservation.findAll");
-        return query.getResultList();
+    public List findAll() { 
+        return em.createNamedQuery("Reservation.findAll").getResultList();
     }
-
+    @Override
+    public List findReservations(Date from, Date to, int minimumPrice, int maximumPrice,int floor) {
+//         return this.findAll();
+        return em.createNamedQuery("Reservation.findReservations")
+                .setParameter("from", from).setParameter("to", to)
+                .setParameter("priceFrom", minimumPrice)
+                .setParameter("priceTo",maximumPrice)
+                .setParameter("floor", floor).getResultList();
+    }
     @Override
     public Reservation find(int id) {
-        Reservation reserve = (Reservation) em.find(Reservation.class, id);
-        return reserve;
+         
+        return (Reservation) em.find(Reservation.class, id);
     }
 
     @Override

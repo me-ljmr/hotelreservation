@@ -6,6 +6,7 @@
 package com.awesomegroup.sessionbean;
  
 import com.awesomegroup.entity.Service;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,7 +14,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -35,7 +35,14 @@ public class ServiceSessionBean implements ServiceSessionBeanRemote, ServiceSess
          
         return em.createNamedQuery("Service.findAll").getResultList();
     }
-    
+    @Override
+    public List getServicesAsCollection(int[] serviceIdLists){
+        List services=new ArrayList();
+        for(int x :serviceIdLists){
+            services.add(this.get(x));
+        }
+        return services;
+    }
     @Override
     public void delete(int id) {
         em.remove(get(id));

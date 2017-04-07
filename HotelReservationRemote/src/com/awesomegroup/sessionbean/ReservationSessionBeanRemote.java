@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sessionbean;
+package com.awesomegroup.sessionbean;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -22,4 +23,6 @@ public interface ReservationSessionBeanRemote {
     void delete(int id);
 
     void save(Object reservation);
+    
+    List findReservations(Date from, Date to, int minimumPrice, int maximumPrice,int floor);
 }
