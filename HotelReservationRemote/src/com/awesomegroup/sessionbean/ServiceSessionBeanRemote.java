@@ -23,4 +23,8 @@ public interface ServiceSessionBeanRemote {
     void save(Object service);
     
     List getServicesAsCollection(int[] serviceIdLists);
+    
+    int count();
+    
+    List getServiceRoomCount();
 }

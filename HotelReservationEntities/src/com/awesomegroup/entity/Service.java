@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Service.findAll", query = "SELECT s FROM Service s"),
     @NamedQuery(name = "Service.findById", query = "SELECT s FROM Service s WHERE s.id = :id"),
     @NamedQuery(name = "Service.findByTitle", query = "SELECT s FROM Service s WHERE s.title = :title"),
+    @NamedQuery(name = "Service.count", query = "SELECT count(r) FROM Service r"),
+    @NamedQuery(name = "Service.findTotalServiceRoomCount", query = "select s.title , count(s.roomServiceCollection) from Service s group by s.title"),
     @NamedQuery(name = "Service.findByDescription", query = "SELECT s FROM Service s WHERE s.description = :description")})
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;

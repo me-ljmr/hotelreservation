@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reservation.findByBookedDate", query = "SELECT r FROM Reservation r WHERE r.bookedDate = :bookedDate"),
     @NamedQuery(name = "Reservation.findByDateFrom", query = "SELECT r FROM Reservation r WHERE r.dateFrom = :dateFrom"),
     @NamedQuery(name = "Reservation.findByDateTill", query = "SELECT r FROM Reservation r WHERE r.dateTill = :dateTill"),
-    
+    @NamedQuery(name = "Reservation.countBookings", query = "SELECT count(r) FROM Reservation r where r.status='BK'"),
      
     @NamedQuery(name = "Reservation.findBySpecialService", query = "SELECT r FROM Reservation r WHERE r.specialService = :specialService"),
     @NamedQuery(name = "Reservation.findByStatus", query = "SELECT r FROM Reservation r WHERE r.status = :status"),

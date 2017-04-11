@@ -21,4 +21,5 @@ public interface RoomTypeSessionBeanRemote {
     void delete(int id);
 
     void save(Object room);
+    int count();
 }

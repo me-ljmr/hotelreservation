@@ -59,8 +59,7 @@
                             <c:forEach var="error" items="${errors}">
                                 <span>${error}</span><br>
                             </c:forEach>
-                            
-                        
+                             
                         </label>
                         </div>
                     </c:if>
@@ -78,13 +77,13 @@
                     <input type="hidden" id="roomtypeid" name="roomtypeid" value="0" /> 
                     <input type="hidden" id="mode" name="mode" value="save" />
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                          
-                        <input value="${description}" type="text" id="description" name="description" class="form-control" placeholder="Description" title="Room Type Description"/> 
+                        <input value="${title}" type="text" id="title" name="title" class="form-control" placeholder="Title" title="Room Type Description"/> 
                         
                     </div>
-                    <div class="col-md-3">
-                        <input value="${rate}" type="number" id="rate" title="Room Type Detail" name="rate" placeholder="Rate" class="form-control"/> 
+                    <div class="col-md-2">
+                        <input value="${rate}" type="text" id="rate" title="Room Type Detail" name="rate" placeholder="Rate" class="form-control"/> 
                          
                     </div>
                     <div class="col-md-2">
@@ -101,14 +100,21 @@
                         </div>
                     </div>
                 </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <textarea rows="4" cols="1" class="form-control" placeholder="Description" id="description" name="description"></textarea>
+                                      
+                            </div>
+                        </div>
                 </form>
                 <div class="row">
                     <table class="table table-bordered ">
 
                         <tr>
                             <th>Title</th>
-                            <th>Description</th>
-                            <th>Assigned To</th>
+                            <th style="width:350px;">Description</th>
+                            <th>Rate</th>
+                             
                             <th>Action</th>
                             
                         </tr> 
@@ -124,11 +130,11 @@
                         <c:forEach var="roomtype" items="${roomtypes}">
                             <tr>
                                 
-                                
+                                <td class="title">${roomtype.title}</td>
                                 <td class="description">${roomtype.description}</td> 
                                 <td class="rate">${roomtype.rate}</td>
                                  
-                                <td></td>
+                                 
                                 <td>
                                     <button class="btn btn-primary editbutton" data-id="${roomtype.id}">Edit</button>
                                     <button class="btn btn-danger deletebutton" data-id="${roomtype.id}">Delete</button>
@@ -154,6 +160,7 @@
         $(".editbutton").click(
             function(){
                 $("#rate").val($(this).closest("tr").find(".rate").text());
+                $("#title").val($(this).closest("tr").find(".title").text());
                 $("#description").val($(this).closest("tr").find(".description").text());
                 $(".updatebutton").css("display", "block");
                 $(".cancelbutton").css("display", "block");
@@ -164,6 +171,7 @@
         $(".cancelbutton").click(
             function(){
                 $("#rate").val($(this).closest("tr").find(".rate").text());
+                $("#title").val($(this).closest("tr").find(".title").text());
                 $("#description").val($(this).closest("tr").find(".description").text());
                 $(".updatebutton").css("display", "none");
                 $(".cancelbutton").css("display", "none");

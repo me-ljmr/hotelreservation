@@ -52,14 +52,12 @@
                  
                 
                 <div class="row">
-                    <c:if test = "${errors != null }">
+                    <c:if test = "${errors!=null}">
                         <div class="col-lg-12">
                         <label class="alert alert-danger">
                             <c:forEach var="error" items="${errors}">
                                 <span>${error}</span>
-                            </c:forEach>
-                            
-                        
+                            </c:forEach> 
                         </label>
                         </div>
                     </c:if>

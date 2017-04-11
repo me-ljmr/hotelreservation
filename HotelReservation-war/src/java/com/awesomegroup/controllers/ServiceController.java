@@ -62,6 +62,7 @@ public class ServiceController {
         List<Service> services=null;
         try{
             services= getServiceSessionRemote().getAll();
+            errors = null;
             
         }catch(Exception ex){
             
@@ -92,7 +93,7 @@ public class ServiceController {
                  
                 errors.add("Title cannot be empty");
             }
-            if(errors==null)
+            if(errors.isEmpty())
             {
                 Service service=null;
                 if(request.getParameter("serviceid").equals("0")){

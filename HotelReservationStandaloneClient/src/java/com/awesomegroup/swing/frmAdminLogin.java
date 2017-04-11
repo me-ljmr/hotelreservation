@@ -201,13 +201,14 @@ public class frmAdminLogin extends javax.swing.JFrame {
         
         catch(Exception ex){
             pauth = null;
-             
+             if(ex!=null && ex.getMessage()!=null){
             if(!ex.getMessage().trim().equals(""))
                 lblError.setText(ex.getMessage());
             else
                 lblError.setText("Error while trying to connect");
             
             }
+        }
         }
     }
     /**

@@ -42,8 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findByFloor", query = "SELECT r FROM Room r WHERE r.floor = :floor"),
     @NamedQuery(name = "Room.findByRoomType", query = "SELECT r FROM Room r WHERE r.roomTypeId.id = :roomTypeId"),
     @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber"),
+    @NamedQuery(name = "Room.count", query = "SELECT count(r) FROM Room r"),
     @NamedQuery(name = "Room.findByServiceId", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id = :serviceId"),
         @NamedQuery(name = "Room.findByServices", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id in :services")
+        
 })
 
 public class Room implements Serializable {

@@ -190,4 +190,13 @@ public class AdminReportsController {
     
     
     //-------------------- end of room reservation details report ---------------------
+    
+    // start of message view request
+    
+    @RequestMapping(value="admin/messages", method=RequestMethod.GET)
+    public String showUserRequestedMessages(Model model){
+        
+        return "admin/specialrequestmessages";
+    }
+    // end of message view admin request
 }

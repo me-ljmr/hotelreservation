@@ -46,6 +46,8 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote, Res
          
         return (Reservation) em.find(Reservation.class, id);
     }
+    
+    
 
     @Override
     public void delete(int id) {
@@ -66,5 +68,10 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote, Res
         }
     }
 
+    @Override
+    public int countBookings() {
+        return em.createNamedQuery("Reservation.countBookings",Long.class).getSingleResult().intValue();       
+    }
+ 
  
 }

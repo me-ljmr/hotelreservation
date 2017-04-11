@@ -66,7 +66,7 @@
                             <th>Room Number</th>
                             <th>Floor Number</th>
 
-                            <th style="width: 400px;">Type</th>
+                            <th style="width: 400px;">Room Type</th>
                             <th>Action</th>
                         </tr>
 
@@ -95,10 +95,10 @@
                                 <td>${room.floor}</td>
 
                                 <td>
-                                    <div>${room.roomTypeId.description} - $${room.roomTypeId.rate}</div>
+                                    <div>${room.roomTypeId.title} - $${room.roomTypeId.rate}</div>
                                     <div>
                                         <c:forEach var="service" items="${room.roomServiceCollection}">
-                                            <label class="label label-info">${service.serviceId.id} - ${service.serviceId.title}</label>
+                                            <label class="label label-primary">${service.serviceId.id} - ${service.serviceId.title}</label>
                                             
                                         </c:forEach>
                                         

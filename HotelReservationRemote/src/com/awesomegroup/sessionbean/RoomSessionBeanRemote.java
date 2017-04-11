@@ -22,6 +22,7 @@ public interface RoomSessionBeanRemote {
     void delete(int id);
 
     void save(Object room);
+    int count();
     
     List getRoomsByFloorNumber(int floor);
     

@@ -86,11 +86,12 @@ public class RoomTypeController {
         List<String> errors = null;
         List<String> messages = null;
         String desc=""  ;
+        String title="";
         double rate=0;
         if(request.getParameter("mode").equals("save")){
             // new or edit
             desc = request.getParameter("description");
-            
+            title = request.getParameter("title");
             
             if(emptyCheck(request.getParameter("rate")) || request.getParameter("rate").equals("0")){
                 
@@ -106,9 +107,9 @@ public class RoomTypeController {
                 }
             }
               
-            if(emptyCheck(request.getParameter("description"))){
+            if(emptyCheck(request.getParameter("title"))){
                 if (errors==null) errors = new ArrayList<>();
-                errors.add("Please describe the type of room");   
+                errors.add("Please give a title for the room type");   
             }
             if(errors==null){
                 RoomType roomtype=null;
@@ -124,12 +125,14 @@ public class RoomTypeController {
                      
                 }
                 roomtype.setRate(BigDecimal.valueOf(Double.parseDouble(request.getParameter("rate"))));
-                roomtype.setDescription(request.getParameter("description"));
+                roomtype.setTitle(title);
+                roomtype.setDescription(desc);
                 getRoomTypeSessionRemote().save(roomtype);
                 if(messages==null) messages = new ArrayList<>();
                 messages.add("Data Saved Successfully");
             }else{
                 model.addAttribute("rate",rate);
+                model.addAttribute("title",title);
                 model.addAttribute("description",desc);
             }
         }else if (request.getParameter("mode").equals("delete")){

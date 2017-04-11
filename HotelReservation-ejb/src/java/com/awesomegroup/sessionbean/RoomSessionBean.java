@@ -53,6 +53,13 @@ public class RoomSessionBean implements RoomSessionBeanRemote, RoomSessionBeanLo
                 .getResultList();
     }
     
+    @Override
+    public int count(){
+        return  em.createNamedQuery("Room.count",Long.class) 
+                .getSingleResult().intValue();
+//                return 0;
+    }
+    
     @Override 
     public List getRoomsByServices(Collection<Object> services){
         int[] arr  = new int[services.size()];

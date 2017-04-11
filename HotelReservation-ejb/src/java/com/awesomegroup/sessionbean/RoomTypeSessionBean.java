@@ -13,7 +13,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -44,7 +43,14 @@ public class RoomTypeSessionBean implements RoomTypeSessionBeanRemote, RoomTypeS
     public void delete(int id) {
         em.remove(get(id));
     }
-
+    
+    @Override
+    public int count(){
+        return  em.createNamedQuery("RoomType.count",Long.class) 
+                .getSingleResult().intValue();
+ 
+    }
+    
     @Override
     public void save(RoomType roomType) {
         if(roomType.getId() == null || roomType.getId() == 0) {

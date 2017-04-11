@@ -788,17 +788,20 @@ exists or setup the property manually. For example like this:
     <target depends="compile" if="is.server.weblogic" name="library-inclusion-in-archive">
         <basename file="${reference.HotelReservationRemote.jar}" property="manifest.reference.HotelReservationRemote.jar"/>
         <basename file="${reference.HotelReservationEntities.jar}" property="manifest.reference.HotelReservationEntities.jar"/>
+        <basename file="${file.reference.commons-io-2.5.jar}" property="manifest.file.reference.commons-io-2.5.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 "/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.reference.HotelReservationRemote.jar}"/>
             <attribute name="jar-2-Extension-Name" value="${manifest.reference.HotelReservationEntities.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.commons-io-2.5.jar}"/>
         </manifest>
     </target>
     <target depends="compile" if="dist.ear.dir" name="library-inclusion-in-manifest">
         <copyfiles files="${reference.HotelReservationRemote.jar}" manifestproperty="manifest.reference.HotelReservationRemote.jar" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${reference.HotelReservationEntities.jar}" manifestproperty="manifest.reference.HotelReservationEntities.jar" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.commons-io-2.5.jar}" manifestproperty="manifest.file.reference.commons-io-2.5.jar" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.reference.HotelReservationRemote.jar} lib/${manifest.reference.HotelReservationRemote.jar} ${manifest.reference.HotelReservationEntities.jar} lib/${manifest.reference.HotelReservationEntities.jar} "/>
+            <attribute name="Class-Path" value="${manifest.reference.HotelReservationRemote.jar} lib/${manifest.reference.HotelReservationRemote.jar} ${manifest.reference.HotelReservationEntities.jar} lib/${manifest.reference.HotelReservationEntities.jar} ${manifest.file.reference.commons-io-2.5.jar} lib/${manifest.file.reference.commons-io-2.5.jar} "/>
         </manifest>
     </target>
     <target name="-copy-meta-inf">

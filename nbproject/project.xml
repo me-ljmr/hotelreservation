@@ -12,19 +12,15 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
-                    <file>${reference.HotelReservationSpring.dist-ear}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
-                    <file>${reference.HotelReservation-war.dist-ear}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
-                    <file>${reference.HotelReservationEntities-ejbmodule.dist-ear}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
                     <file>${reference.HotelReservationStandaloneClient.j2ee-module-car}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library>
+                    <file>${reference.HotelReservationEntities.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library>
+                    <file>${reference.HotelReservationRemote.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
@@ -39,20 +35,20 @@
                 <id>dist-ear</id>
             </reference>
             <reference>
-                <foreign-project>HotelReservationEntities-ejbmodule</foreign-project>
-                <artifact-type>j2ee_ear_archive</artifact-type>
+                <foreign-project>HotelReservationEntities</foreign-project>
+                <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
-                <target>dist-ear</target>
-                <clean-target>clean-ear</clean-target>
-                <id>dist-ear</id>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>HotelReservationSpring</foreign-project>
-                <artifact-type>j2ee_ear_archive</artifact-type>
+                <foreign-project>HotelReservationRemote</foreign-project>
+                <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
-                <target>dist-ear</target>
-                <clean-target>clean-ear</clean-target>
-                <id>dist-ear</id>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
             </reference>
             <reference>
                 <foreign-project>HotelReservationStandaloneClient</foreign-project>

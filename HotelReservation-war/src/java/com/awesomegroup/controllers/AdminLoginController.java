@@ -103,7 +103,7 @@ public class AdminLoginController {
         }
         try{
              Object obj = getAdminSessionBeanRemote().find(username);
-             if(obj==null)
+             
             AdminInfo admin= (AdminInfo)getAdminSessionBeanRemote().find(username);
             
             if(admin==null)

@@ -58,6 +58,9 @@
                         <a href="${adminrootpath}/reports/reservationdetail"><i class="fa fa-cogs fa-fw"></i>Reservation Details Report</a>
                     </li>
                     
+                    <li>
+                        <a href="${adminrootpath}/messages"><i class="fa fa-cogs fa-fw"></i>Special Service Requests</a>
+                    </li>
                 </ul>
             </li>
          

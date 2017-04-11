@@ -36,6 +36,17 @@ public class ServiceSessionBean implements ServiceSessionBeanRemote, ServiceSess
         return em.createNamedQuery("Service.findAll").getResultList();
     }
     @Override
+    public List getServiceRoomCount(){
+        return em.createNamedQuery("Service.findTotalServiceRoomCount").getResultList();
+    }
+        @Override
+    public int count(){
+        return em.createNamedQuery("Service.count",Long.class) 
+                .getSingleResult().intValue();
+        
+       // return 0;
+    }
+    @Override
     public List getServicesAsCollection(int[] serviceIdLists){
         List services=new ArrayList();
         for(int x :serviceIdLists){

@@ -101,6 +101,7 @@ public class frmAdminDashboard extends javax.swing.JFrame {
         frmRoomType rt = new frmRoomType();
         rt.setLocationRelativeTo(this);
         rt.setVisible(true);
+//        new frmRoomType().setVisible(true);
         
     }//GEN-LAST:event_mnuRoomTypeActionPerformed
 
@@ -109,14 +110,16 @@ public class frmAdminDashboard extends javax.swing.JFrame {
         frmRoomAmenities rt = new frmRoomAmenities();
         rt.setLocationRelativeTo(this);
         rt.setVisible(true);
+//        new frmRoomAmenities().setVisible(true);
         
     }//GEN-LAST:event_mnuRoomAmenitiesSetupActionPerformed
 
     private void frmRoomSetupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frmRoomSetupActionPerformed
         // TODO add your handling code here:
-//        frmRoom rt = new frmRoom();
-//        rt.setLocationRelativeTo(this);
-//        rt.setVisible(true);
+        frmRoom rt = new frmRoom();
+        rt.setLocationRelativeTo(this);
+        rt.setVisible(true);
+//        new frmRoom().setVisible(true);
     }//GEN-LAST:event_frmRoomSetupActionPerformed
 
     /**

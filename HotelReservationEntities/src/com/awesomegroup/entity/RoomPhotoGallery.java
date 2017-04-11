@@ -13,7 +13,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,6 +52,8 @@ public class RoomPhotoGallery implements Serializable {
     @Size(max = 20)
     @Column(name = "photo_title")
     private String photoTitle;
+    
+   
     @JoinColumn(name = "roomId", referencedColumnName = "id")
     @ManyToOne
     private Room roomId;
@@ -107,13 +108,6 @@ public class RoomPhotoGallery implements Serializable {
         return "com.awesomegroup.RoomPhotoGallery[ id=" + id + " ]";
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
     public Room getRoomId() {
         return roomId;
@@ -121,6 +115,14 @@ public class RoomPhotoGallery implements Serializable {
 
     public void setRoomId(Room roomId) {
         this.roomId = roomId;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
     
 }

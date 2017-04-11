@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RoomService.findAll", query = "SELECT r FROM RoomService r"),
+    
     @NamedQuery(name = "RoomService.findById", query = "SELECT r FROM RoomService r WHERE r.id = :id")})
+
 public class RoomService implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -172,7 +172,8 @@ public class RoomController {
         room.setRoomServiceCollection(roomservicecollection);
         room.setRoomNumber(request.getParameter("roomnumber"));
         room.setFloor(floor);
-        room.setRoomTypeId(roomtype); 
+        
+        room.setRoomTypeId(roomtype);
         
         sessionBean = getRoomSessionRemote();
         sessionBean.save(room);

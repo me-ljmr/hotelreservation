@@ -6,14 +6,13 @@
 package com.awesomegroup.controllers;
 
 import com.awesomegroup.entity.AdminInfo;
-import com.awesomegroup.sessionbean.AdminSessionBeanRemote;
+import com.awesomegroup.sessionbean.ReservationSessionBeanRemote;
 import com.awesomegroup.sessionbean.RoomSessionBeanRemote;
 import com.awesomegroup.sessionbean.RoomTypeSessionBeanRemote;
 import com.awesomegroup.sessionbean.ServiceSessionBeanRemote;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +72,18 @@ public class AdminDashboardController {
         }
         return (ServiceSessionBeanRemote)httpsession.getAttribute("servicesessionremote");
     }
-      
+     private ReservationSessionBeanRemote getReservationbeanRemote(){
+             ctx = null;
+        try{
+        ctx = new InitialContext(); 
+        if (httpsession.getAttribute("reservationremote")==null){
+            httpsession.setAttribute("reservationremote",ctx.lookup(ReservationSessionBeanRemote.class.getName()));
+        }
+        }catch(Exception ex){
+            Logger.getLogger(AdminDashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (ReservationSessionBeanRemote)httpsession.getAttribute("reservationremote");
+    } 
     
     @RequestMapping(value="admin/dashboard", method=RequestMethod.GET)
     public String showdashboard(Model model){
@@ -81,6 +91,12 @@ public class AdminDashboardController {
             return "redirect:login";
         }
         model.addAttribute("admininfo",(AdminInfo)httpsession.getAttribute("whoisloggedinasadmin"));
+        // sending counters 
+        model.addAttribute("roomscount",getRoombeanRemote().count());
+        model.addAttribute("servicescount",getServicebeanRemote().count());
+        model.addAttribute("roomtypescount",getRoomtypebeanRemote().count());
+        model.addAttribute("bookingscount",getReservationbeanRemote().countBookings());
+        model.addAttribute("roomscountbyservice",getServicebeanRemote().getServiceRoomCount());
         return "admin/dashboard";
     }
 //    @RequestMapping(value="admin/login",method=RequestMethod.POST)
