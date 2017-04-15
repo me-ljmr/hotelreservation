@@ -27,4 +27,7 @@ public interface ReservationSessionBeanRemote {
     List findReservations(Date from, Date to, int minimumPrice, int maximumPrice,int floor);
     
     int countBookings();
+    
+    List findReservationAvailable();
+    List findReservationsByUserId(int id);
 }

@@ -21,4 +21,5 @@ public interface UserInfoSessionBeanRemote {
     void delete(int id);
 
     void save(Object userInfo);
+    Object getByUserEmail(String email);
 }
