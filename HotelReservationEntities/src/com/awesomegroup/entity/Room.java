@@ -1,13 +1,9 @@
-package com.awesomegroup.entity;
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package com.awesomegroup.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author lujamanandhar
+ * @author media
  */
 @Entity
 @Table(name = "room")
@@ -40,14 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByFloor", query = "SELECT r FROM Room r WHERE r.floor = :floor"),
-    @NamedQuery(name = "Room.findByRoomType", query = "SELECT r FROM Room r WHERE r.roomTypeId.id = :roomTypeId"),
-    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber"),
-    @NamedQuery(name = "Room.count", query = "SELECT count(r) FROM Room r"),
-    @NamedQuery(name = "Room.findByServiceId", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id = :serviceId"),
-        @NamedQuery(name = "Room.findByServices", query = "SELECT r FROM Room r INNER JOIN r.roomServiceCollection s where s.serviceId.id in :services")
-        
-})
-
+    @NamedQuery(name = "Room.findByRoomNumber", query = "SELECT r FROM Room r WHERE r.roomNumber = :roomNumber")})
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,15 +48,16 @@ public class Room implements Serializable {
     @Size(max = 10)
     @Column(name = "room_number")
     private String roomNumber;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId", fetch = FetchType.EAGER)
-    private Collection<RoomService> roomServiceCollection;
-    @OneToMany(mappedBy = "roomId")
-    private Collection<Reservation> reservationCollection;
     @JoinColumn(name = "room_type_id", referencedColumnName = "id")
-    @ManyToOne()
+    @ManyToOne
     private RoomType roomTypeId;
+    @JoinColumn(name = "room_photo_gallery_id", referencedColumnName = "id")
+    @ManyToOne
+    private RoomPhotoGallery roomPhotoGalleryId;
     @OneToMany(mappedBy = "roomId")
     private Collection<RoomPhotoGallery> roomPhotoGalleryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomId")
+    private Collection<RoomService> roomServiceCollection;
 
     public Room() {
     }
@@ -101,24 +90,6 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
-    @XmlTransient
-    public Collection<RoomService> getRoomServiceCollection() {
-        return roomServiceCollection;
-    }
-
-    public void setRoomServiceCollection(Collection<RoomService> roomServiceCollection) {
-        this.roomServiceCollection = roomServiceCollection;
-    }
-
-    @XmlTransient
-    public Collection<Reservation> getReservationCollection() {
-        return reservationCollection;
-    }
-
-    public void setReservationCollection(Collection<Reservation> reservationCollection) {
-        this.reservationCollection = reservationCollection;
-    }
-
     public RoomType getRoomTypeId() {
         return roomTypeId;
     }
@@ -127,14 +98,19 @@ public class Room implements Serializable {
         this.roomTypeId = roomTypeId;
     }
 
+    public RoomPhotoGallery getRoomPhotoGalleryId() {
+        return roomPhotoGalleryId;
+    }
+
+    public void setRoomPhotoGalleryId(RoomPhotoGallery roomPhotoGalleryId) {
+        this.roomPhotoGalleryId = roomPhotoGalleryId;
+    }
+
     @XmlTransient
     public Collection<RoomPhotoGallery> getRoomPhotoGalleryCollection() {
         return roomPhotoGalleryCollection;
     }
 
-    public void addAPicture(RoomPhotoGallery roompicgallery){
-        roomPhotoGalleryCollection.add(roompicgallery);
-    }
     public void setRoomPhotoGalleryCollection(Collection<RoomPhotoGallery> roomPhotoGalleryCollection) {
         this.roomPhotoGalleryCollection = roomPhotoGalleryCollection;
     }
@@ -146,6 +122,10 @@ public class Room implements Serializable {
         return hash;
     }
 
+    public void setRoomServiceCollection(Collection<RoomService> roomServiceCollection) {
+        this.roomServiceCollection = roomServiceCollection;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -161,7 +141,7 @@ public class Room implements Serializable {
 
     @Override
     public String toString() {
-        return "com.awesomegroup.Room[ id=" + id + " ]";
+        return "com.awesomegroup.entity.Room[ id=" + id + " ]";
     }
     
 }
