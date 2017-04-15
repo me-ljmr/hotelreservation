@@ -55,6 +55,13 @@ public class UserInfoSessionBean implements UserInfoSessionBeanRemote, UserInfoS
         }
     }
     
+
+    @Override
+    public Object getByUserEmail(String email) {
+      return em.createNamedQuery("UserInfo.findByEmail")
+               .setParameter("email", email)
+               .getSingleResult();
+    }
     
     public void save(Object userInfo) {
         save((UserInfo) userInfo);

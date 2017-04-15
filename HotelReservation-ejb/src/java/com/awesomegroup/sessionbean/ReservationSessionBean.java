@@ -14,6 +14,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
  
 
 /**
@@ -72,6 +73,17 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote, Res
     public int countBookings() {
         return em.createNamedQuery("Reservation.countBookings",Long.class).getSingleResult().intValue();       
     }
- 
+    @Override
+    public List findReservationsByUserId(int id) {
+        return em.createNamedQuery("Reservation.findByUserId")
+                .setParameter("userid", id)
+                .getResultList();
+    }
+
+    @Override
+    public List findReservationAvailable() {
+        Query query = em.createNamedQuery("Reservation.findReservationAvailable");
+        return query.getResultList();
+    }
  
 }
